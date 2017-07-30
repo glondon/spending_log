@@ -21,6 +21,9 @@ namespace FinancialApp
             while (rdr.Read())
                 Console.WriteLine(rdr[0] + " $" + rdr[1]);
 
+            rdr.Close();
+            conn.Close();
+
             Console.ReadLine();
             
         }
