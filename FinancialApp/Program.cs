@@ -35,10 +35,8 @@ namespace FinancialApp
         private void monthGeneral()
         {
             Console.WriteLine("Spending for Current Month:\n");
-            DateTime date = DateTime.Now;
-            DateTime monthBegin = new DateTime(date.Year, date.Month, 1);
          
-            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + monthBegin.ToString("d") + "' ORDER BY date", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
             rdr = cmd.ExecuteReader();
             Console.WriteLine();
             if (rdr.HasRows)
@@ -60,6 +58,22 @@ namespace FinancialApp
             }
             else
                 Console.WriteLine("No results");
+        }
+
+        private void monthSummary()
+        {
+
+        }
+
+        private string getMonthBegin()
+        {
+            string monthStart;
+
+            DateTime date = DateTime.Now;
+            DateTime monthBegin = new DateTime(date.Year, date.Month, 1);
+            monthStart = monthBegin.ToString("d");
+
+            return monthStart;
         }
 
         static void Main(string[] args)
