@@ -32,9 +32,10 @@ namespace FinancialApp
         private void monthGeneral()
         {
             Console.WriteLine("Spending for Current Month:\n");
-            DateTime today = DateTime.Today;
-            Console.WriteLine(today.ToString("d")); //TODO need to get entire month
-            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date < '" + today.ToString("d") + "' ORDER BY date", conn);
+            DateTime date = DateTime.Now;
+            DateTime monthBegin = new DateTime(date.Year, date.Month, 1);
+         
+            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + monthBegin.ToString("d") + "' ORDER BY date", conn);
             rdr = cmd.ExecuteReader();
             Console.WriteLine("\n");
             if (rdr.HasRows)
