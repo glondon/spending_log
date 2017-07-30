@@ -34,13 +34,21 @@ namespace FinancialApp
             Console.WriteLine("Spending for Current Month:\n");
             DateTime today = DateTime.Today;
             Console.WriteLine(today.ToString("d")); //TODO need to get entire month
-            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date = '" + today.ToString("d") + "' ORDER BY date", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date < '" + today.ToString("d") + "' ORDER BY date", conn);
             rdr = cmd.ExecuteReader();
             Console.WriteLine("\n");
             if (rdr.HasRows)
             {
+                double total = 0;
+
                 while (rdr.Read())
-                    Console.WriteLine(rdr[0] + " $" + rdr[1] + " " + rdr[2] + " " + rdr[3]);
+                {
+                    total += Convert.ToDouble(rdr[1]);
+                    Console.WriteLine(rdr[0] + " $" + rdr[1] + " " + rdr[2] + " " + rdr[3] + " " + rdr[4]);
+                }
+
+                Console.WriteLine("\nTotal Spent $" + total);
+                    
             }
             else
                 Console.WriteLine("No results");
