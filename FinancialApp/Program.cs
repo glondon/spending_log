@@ -24,9 +24,12 @@ namespace FinancialApp
             Console.WriteLine("Choose one of the following:\n");
             Console.WriteLine("1. Show all spending activity for current month");
             Console.WriteLine("2. Show all spending activity summarized for current month");
+            Console.WriteLine("3. Insert a new expense");
+            Console.WriteLine("4. Update an expense");
+            Console.WriteLine("5. Delete an expense");
+            Console.WriteLine("6. Show year summary results");
             Console.WriteLine("9. Quit program");
-
-            Console.WriteLine("\n");
+            Console.WriteLine();
         }
 
         private void monthGeneral()
@@ -37,7 +40,7 @@ namespace FinancialApp
          
             SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + monthBegin.ToString("d") + "' ORDER BY date", conn);
             rdr = cmd.ExecuteReader();
-            Console.WriteLine("\n");
+            Console.WriteLine();
             if (rdr.HasRows)
             {
                 double total = 0;
