@@ -1,1 +1,6 @@
 c:\users\greg\documents\visual studio 2013\Projects\FinancialApp\FinancialApp\bin\Debug\FinancialApp.exe.config
+C:\Users\Greg\documents\visual studio 2013\Projects\FinancialApp\FinancialApp\bin\Debug\FinancialApp.exe
+C:\Users\Greg\documents\visual studio 2013\Projects\FinancialApp\FinancialApp\bin\Debug\FinancialApp.pdb
+C:\Users\Greg\documents\visual studio 2013\Projects\FinancialApp\FinancialApp\obj\Debug\FinancialApp.csprojResolveAssemblyReference.cache
+C:\Users\Greg\documents\visual studio 2013\Projects\FinancialApp\FinancialApp\obj\Debug\FinancialApp.exe
+C:\Users\Greg\documents\visual studio 2013\Projects\FinancialApp\FinancialApp\obj\Debug\FinancialApp.pdb
