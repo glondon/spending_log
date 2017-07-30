@@ -41,11 +41,14 @@ namespace FinancialApp
             {
                 double total = 0;
 
+                Console.WriteLine(String.Format("{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}", "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
+
                 while (rdr.Read())
                 {
-                    //TODO display in table format
                     total += Convert.ToDouble(rdr[1]);
-                    Console.WriteLine(rdr[0] + " $" + rdr[1] + " " + rdr[2] + " " + rdr[3] + " " + Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy"));
+                    Console.WriteLine(String.Format(
+                        "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}", 
+                        rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
                 }
 
                 Console.WriteLine("\nTotal Spent $" + total);
