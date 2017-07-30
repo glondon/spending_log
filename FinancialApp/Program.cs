@@ -9,7 +9,17 @@ namespace FinancialApp
 {
     class Program
     {
-        public void menu()
+        SqlConnection conn;
+        SqlDataReader rdr;
+
+        public Program()
+        {
+            conn = new SqlConnection("Data Source=GREG-BEE-2;Initial Catalog=spending;Integrated Security=True");
+            rdr = null;
+            conn.Open();
+        }
+
+        private void menu()
         {
             Console.WriteLine("Choose one of the following:\n");
             Console.WriteLine("1. Show all spending activity for current month");
@@ -19,13 +29,26 @@ namespace FinancialApp
             Console.WriteLine("\n");
         }
 
+        private void monthGeneral()
+        {
+            Console.WriteLine("Spending for Current Month:\n");
+            DateTime today = DateTime.Today;
+            Console.WriteLine(today.ToString("d")); //TODO need to get entire month
+            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date = '" + today.ToString("d") + "' ORDER BY date", conn);
+            rdr = cmd.ExecuteReader();
+            Console.WriteLine("\n");
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                    Console.WriteLine(rdr[0] + " $" + rdr[1] + " " + rdr[2] + " " + rdr[3]);
+            }
+            else
+                Console.WriteLine("No results");
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("\n---------- Financial App - Personal Spending Summary ----------\n");
-
-            SqlConnection conn = new SqlConnection("Data Source=GREG-BEE-2;Initial Catalog=spending;Integrated Security=True");
-            SqlDataReader rdr = null;
-            conn.Open();
 
             Program p = new Program();
             p.menu();
@@ -42,20 +65,7 @@ namespace FinancialApp
                 switch (intCheck)
                 {
                     case 1:
-                        Console.WriteLine("Spending for Current Month:\n");
-                        DateTime today = DateTime.Today;
-                        Console.WriteLine(today.ToString("d")); //TODO need to get entire month
-                        SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date = '" + today.ToString("d") + "' ORDER BY date", conn);
-                        rdr = cmd.ExecuteReader();
-                        Console.WriteLine("\n");
-                        if (rdr.HasRows)
-                        {
-                            while (rdr.Read())
-                                Console.WriteLine(rdr[0] + " $" + rdr[1] + " " + rdr[2] + " " + rdr[3]);
-                        }
-                        else
-                            Console.WriteLine("No results");
-                        
+                        p.monthGeneral();
                         break;
                     case 2:
                         Console.WriteLine("You chose 2");
@@ -72,8 +82,8 @@ namespace FinancialApp
                 Console.WriteLine("Not a valid integer\n");
             
 
-            rdr.Close();
-            conn.Close();
+            p.rdr.Close();
+            p.conn.Close();
 
             Console.ReadLine();
             
