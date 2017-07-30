@@ -43,8 +43,9 @@ namespace FinancialApp
 
                 while (rdr.Read())
                 {
+                    //TODO display in table format
                     total += Convert.ToDouble(rdr[1]);
-                    Console.WriteLine(rdr[0] + " $" + rdr[1] + " " + rdr[2] + " " + rdr[3] + " " + rdr[4]);
+                    Console.WriteLine(rdr[0] + " $" + rdr[1] + " " + rdr[2] + " " + rdr[3] + " " + Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy"));
                 }
 
                 Console.WriteLine("\nTotal Spent $" + total);
