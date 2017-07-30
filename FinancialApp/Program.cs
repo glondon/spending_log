@@ -62,7 +62,28 @@ namespace FinancialApp
 
         private void monthSummary()
         {
+            Console.WriteLine("Spending Summary for Current Month:\n");
 
+            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
+            rdr = cmd.ExecuteReader();
+            Console.WriteLine();
+
+            if (rdr.HasRows)
+            {
+                double total = 0;
+
+                //TODO header Console.WriteLine();
+
+                while (rdr.Read())
+                {
+                    Console.WriteLine(rdr[2]);
+                }
+
+                Console.WriteLine("\nTotal Spent $" + total);
+
+            }
+            else
+                Console.WriteLine("No results");
         }
 
         private string getMonthBegin()
@@ -98,7 +119,7 @@ namespace FinancialApp
                         p.monthGeneral();
                         break;
                     case 2:
-                        Console.WriteLine("You chose 2");
+                        p.monthSummary();
                         break;
                     case 9:
                         Environment.Exit(0);
