@@ -37,6 +37,9 @@ namespace FinancialApp
             Console.WriteLine("8.  View today's spending");
             Console.WriteLine("9.  Quit program");
             Console.WriteLine("10. Show menu");
+            Console.WriteLine("11. View a certain date");
+            Console.WriteLine("12. View a particular month");
+            Console.WriteLine("13. View a certain date range");
             Console.WriteLine();
         }
 
