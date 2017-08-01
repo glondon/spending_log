@@ -24,10 +24,11 @@ namespace FinancialApp
             Console.WriteLine("Choose one of the following:\n");
             Console.WriteLine("1. Show all spending activity for current month");
             Console.WriteLine("2. Show all spending activity summarized for current month");
-            Console.WriteLine("3. Insert a new expense");
-            Console.WriteLine("4. Update an expense");
-            Console.WriteLine("5. Delete an expense");
-            Console.WriteLine("6. Show year summary results");
+            Console.WriteLine("3. Show summary results based on credit card statements");
+            Console.WriteLine("4. Insert a new expense");
+            Console.WriteLine("5. Update an expense");
+            Console.WriteLine("6. Delete an expense");
+            Console.WriteLine("7. Show year summary results");
             Console.WriteLine("9. Quit program");
             Console.WriteLine();
         }
