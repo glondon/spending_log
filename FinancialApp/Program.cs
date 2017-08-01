@@ -27,15 +27,16 @@ namespace FinancialApp
         private void menu()
         {
             Console.WriteLine("Choose one of the following:\n");
-            Console.WriteLine("1. Show all spending activity for current month");
-            Console.WriteLine("2. Show all spending activity summarized for current month");
-            Console.WriteLine("3. Show summary results based on credit card statements");
-            Console.WriteLine("4. Insert a new expense");
-            Console.WriteLine("5. Update an expense");
-            Console.WriteLine("6. Delete an expense");
-            Console.WriteLine("7. View year summary results");
-            Console.WriteLine("8. View today's spending");
-            Console.WriteLine("9. Quit program");
+            Console.WriteLine("1.  Show all spending activity for current month");
+            Console.WriteLine("2.  Show all spending activity summarized for current month");
+            Console.WriteLine("3.  Show summary results based on credit card statements");
+            Console.WriteLine("4.  Insert a new expense");
+            Console.WriteLine("5.  Update an expense");
+            Console.WriteLine("6.  Delete an expense");
+            Console.WriteLine("7.  View year summary results");
+            Console.WriteLine("8.  View today's spending");
+            Console.WriteLine("9.  Quit program");
+            Console.WriteLine("10. Show menu");
             Console.WriteLine();
         }
 
@@ -152,6 +153,9 @@ namespace FinancialApp
                             break;
                         case 9:
                             Environment.Exit(0);
+                            break;
+                        case 10:
+                            p.menu();
                             break;
                         default:
                             Console.WriteLine("Not a valid choice");
