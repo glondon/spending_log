@@ -97,9 +97,9 @@ namespace FinancialApp
 
                 const string format = "{0,-10} {1,-15}";
                 Console.WriteLine(format, "$" + totalDining, "dining out");
-                Console.WriteLine(format, "$" + totalAlcohol, "alcohol");
+                Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), "alcohol");
                 Console.WriteLine(format, "$" + totalGasoline, "gasoline");
-                Console.WriteLine(format, "$" + totalFood, "food");
+                Console.WriteLine(format, "$" + totalFood.ToString("0.00"), "food");
 
                 Console.WriteLine("\nTotal Spent $" + total.Sum());
 
