@@ -42,14 +42,13 @@ namespace FinancialApp
             if (rdr.HasRows)
             {
                 double total = 0;
-
-                Console.WriteLine(String.Format("{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}", "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
+                const string format = "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}";
+                Console.WriteLine(String.Format(format, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
 
                 while (rdr.Read())
                 {
                     total += Convert.ToDouble(rdr[1]);
-                    Console.WriteLine(String.Format(
-                        "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}",
+                    Console.WriteLine(String.Format(format,
                         rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
                 }
 
@@ -77,8 +76,6 @@ namespace FinancialApp
                 double totalGasoline = 0;
                 double totalFood = 0;
 
-                Console.WriteLine(" SPENT | CATEGORY");
-
                 while (rdr.Read())
                 {
                     switch(rdr[2].ToString()){
@@ -98,12 +95,13 @@ namespace FinancialApp
                     
                 }
 
-                total = totalDining + totalAlcohol + totalGasoline + totalFood; 
+                total = totalDining + totalAlcohol + totalGasoline + totalFood;
 
-                Console.WriteLine("$" + totalDining + " | dining out");
-                Console.WriteLine("$" + totalAlcohol + " | alcohol");
-                Console.WriteLine("$" + totalGasoline + " | gasoline");
-                Console.WriteLine("$" + totalFood + " | food");
+                const string format = "{0,-10} {1,-15}";
+                Console.WriteLine(format, "$" + totalDining, "dining out");
+                Console.WriteLine(format, "$" + totalAlcohol, "alcohol");
+                Console.WriteLine(format, "$" + totalGasoline, "gasoline");
+                Console.WriteLine(format, "$" + totalFood, "food");
 
                 Console.WriteLine("\nTotal Spent $" + total);
 
