@@ -127,34 +127,34 @@ namespace FinancialApp
             Program p = new Program();
             p.menu();
 
-            string menuItem = Console.ReadLine();
-
-            //TODO add while statement for input loop
-            
-            int intCheck;
-            if (int.TryParse(menuItem, out intCheck))
+            while(true)
             {
-                intCheck = Int32.Parse(menuItem);
+                string menuItem = Console.ReadLine();
+                int intCheck;
 
-                switch (intCheck)
+                if (int.TryParse(menuItem, out intCheck))
                 {
-                    case 1:
-                        p.monthGeneral();
-                        break;
-                    case 2:
-                        p.monthSummary();
-                        break;
-                    case 9:
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("Not a valid choice");
-                        break;
+                    intCheck = Int32.Parse(menuItem);
+
+                    switch (intCheck)
+                    {
+                        case 1:
+                            p.monthGeneral();
+                            break;
+                        case 2:
+                            p.monthSummary();
+                            break;
+                        case 9:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Not a valid choice");
+                            break;
+                    }
                 }
+                else
+                    Console.WriteLine("Not a valid integer\n");
             }
-            else
-                Console.WriteLine("Not a valid integer\n");
-            
 
             p.rdr.Close();
             p.conn.Close();
