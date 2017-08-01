@@ -12,6 +12,11 @@ namespace FinancialApp
         SqlConnection conn;
         SqlDataReader rdr;
 
+        private const string DINING = "dining out";
+        private const string ALCOHOL = "alcohol";
+        private const string FOOD = "food";
+        private const string GASOLINE = "gasoline";
+
         public Program()
         {
             conn = new SqlConnection("Data Source=GREG-BEE-2;Initial Catalog=spending;Integrated Security=True");
@@ -79,16 +84,16 @@ namespace FinancialApp
                 while (rdr.Read())
                 {
                     switch(rdr[2].ToString()){
-                        case "dining out":
+                        case DINING:
                             totalDining += Convert.ToDouble(rdr[1]);
                             break;
-                        case "alcohol":
+                        case ALCOHOL:
                             totalAlcohol += Convert.ToDouble(rdr[1]);
                             break;
-                        case "gasoline":
+                        case GASOLINE:
                             totalGasoline += Convert.ToDouble(rdr[1]);
                             break;
-                        case "food":
+                        case FOOD:
                             totalFood += Convert.ToDouble(rdr[1]);
                             break;
                     }
@@ -98,10 +103,10 @@ namespace FinancialApp
                 double[] total = {totalDining, totalAlcohol, totalGasoline, totalFood};
 
                 const string format = "{0,-10} {1,-15}";
-                Console.WriteLine(format, "$" + totalDining, "dining out");
-                Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), "alcohol");
-                Console.WriteLine(format, "$" + totalGasoline, "gasoline");
-                Console.WriteLine(format, "$" + totalFood.ToString("0.00"), "food");
+                Console.WriteLine(format, "$" + totalDining, DINING);
+                Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), ALCOHOL);
+                Console.WriteLine(format, "$" + totalGasoline, GASOLINE);
+                Console.WriteLine(format, "$" + totalFood.ToString("0.00"), FOOD);
 
                 Console.WriteLine("\nTotal Spent $" + total.Sum());
 
