@@ -69,8 +69,6 @@ namespace FinancialApp
             
             if (rdr.HasRows)
             {
-
-                double total;
                 double totalDining = 0;
                 double totalAlcohol = 0;
                 double totalGasoline = 0;
@@ -95,7 +93,7 @@ namespace FinancialApp
                     
                 }
 
-                total = totalDining + totalAlcohol + totalGasoline + totalFood;
+                double[] total = {totalDining, totalAlcohol, totalGasoline, totalFood};
 
                 const string format = "{0,-10} {1,-15}";
                 Console.WriteLine(format, "$" + totalDining, "dining out");
@@ -103,7 +101,7 @@ namespace FinancialApp
                 Console.WriteLine(format, "$" + totalGasoline, "gasoline");
                 Console.WriteLine(format, "$" + totalFood, "food");
 
-                Console.WriteLine("\nTotal Spent $" + total);
+                Console.WriteLine("\nTotal Spent $" + total.Sum());
 
             }
             else
