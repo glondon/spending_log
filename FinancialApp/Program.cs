@@ -28,7 +28,8 @@ namespace FinancialApp
             Console.WriteLine("4. Insert a new expense");
             Console.WriteLine("5. Update an expense");
             Console.WriteLine("6. Delete an expense");
-            Console.WriteLine("7. Show year summary results");
+            Console.WriteLine("7. View year summary results");
+            Console.WriteLine("8. View today's spending");
             Console.WriteLine("9. Quit program");
             Console.WriteLine();
         }
