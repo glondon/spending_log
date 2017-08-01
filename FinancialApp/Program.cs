@@ -35,7 +35,7 @@ namespace FinancialApp
         private void monthGeneral()
         {
             Console.WriteLine("Spending for Current Month:\n");
-         
+
             SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
             rdr = cmd.ExecuteReader();
             Console.WriteLine();
@@ -49,12 +49,12 @@ namespace FinancialApp
                 {
                     total += Convert.ToDouble(rdr[1]);
                     Console.WriteLine(String.Format(
-                        "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}", 
+                        "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}",
                         rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
                 }
 
                 Console.WriteLine("\nTotal Spent $" + total);
-                    
+
             }
             else
                 Console.WriteLine("No results");
@@ -63,21 +63,47 @@ namespace FinancialApp
         private void monthSummary()
         {
             Console.WriteLine("Spending Summary for Current Month:\n");
+            Console.WriteLine();
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
             rdr = cmd.ExecuteReader();
-            Console.WriteLine();
-
+            
             if (rdr.HasRows)
             {
-                double total = 0;
 
-                //TODO header Console.WriteLine();
+                double total;
+                double totalDining = 0;
+                double totalAlcohol = 0;
+                double totalGasoline = 0;
+                double totalFood = 0;
+
+                Console.WriteLine(" SPENT | CATEGORY");
 
                 while (rdr.Read())
                 {
-                    Console.WriteLine(rdr[2]);
+                    switch(rdr[2].ToString()){
+                        case "dining out":
+                            totalDining += Convert.ToDouble(rdr[1]);
+                            break;
+                        case "alcohol":
+                            totalAlcohol += Convert.ToDouble(rdr[1]);
+                            break;
+                        case "gasoline":
+                            totalGasoline += Convert.ToDouble(rdr[1]);
+                            break;
+                        case "food":
+                            totalFood += Convert.ToDouble(rdr[1]);
+                            break;
+                    }
+                    
                 }
+
+                total = totalDining + totalAlcohol + totalGasoline + totalFood; 
+
+                Console.WriteLine("$" + totalDining + " | dining out");
+                Console.WriteLine("$" + totalAlcohol + " | alcohol");
+                Console.WriteLine("$" + totalGasoline + " | gasoline");
+                Console.WriteLine("$" + totalFood + " | food");
 
                 Console.WriteLine("\nTotal Spent $" + total);
 
