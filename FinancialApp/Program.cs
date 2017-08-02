@@ -12,10 +12,10 @@ namespace FinancialApp
         SqlConnection conn;
         SqlDataReader rdr;
 
-        private const string DINING = "dining out";
-        private const string ALCOHOL = "alcohol";
-        private const string FOOD = "food";
-        private const string GASOLINE = "gasoline";
+        private const string dining = "dining out";
+        private const string alcohol = "alcohol";
+        private const string food = "food";
+        private const string gasoline = "gasoline";
 
         public Program()
         {
@@ -47,8 +47,8 @@ namespace FinancialApp
         {
             Console.WriteLine("Spending for Current Month:\n");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
-            rdr = cmd.ExecuteReader();
+            SqlCommand monthGeneral = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
+            rdr = monthGeneral.ExecuteReader();
             Console.WriteLine();
             if (rdr.HasRows)
             {
@@ -75,8 +75,8 @@ namespace FinancialApp
             Console.WriteLine("Spending Summary for Current Month:\n");
             Console.WriteLine();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
-            rdr = cmd.ExecuteReader();
+            SqlCommand monthSummary = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
+            rdr = monthSummary.ExecuteReader();
             
             if (rdr.HasRows)
             {
@@ -88,16 +88,16 @@ namespace FinancialApp
                 while (rdr.Read())
                 {
                     switch(rdr[2].ToString()){
-                        case DINING:
+                        case dining:
                             totalDining += Convert.ToDouble(rdr[1]);
                             break;
-                        case ALCOHOL:
+                        case alcohol:
                             totalAlcohol += Convert.ToDouble(rdr[1]);
                             break;
-                        case GASOLINE:
+                        case gasoline:
                             totalGasoline += Convert.ToDouble(rdr[1]);
                             break;
-                        case FOOD:
+                        case food:
                             totalFood += Convert.ToDouble(rdr[1]);
                             break;
                     }
@@ -107,10 +107,10 @@ namespace FinancialApp
                 double[] total = {totalDining, totalAlcohol, totalGasoline, totalFood};
 
                 const string format = "{0,-10} {1,-15}";
-                Console.WriteLine(format, "$" + totalDining, DINING);
-                Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), ALCOHOL);
-                Console.WriteLine(format, "$" + totalGasoline, GASOLINE);
-                Console.WriteLine(format, "$" + totalFood.ToString("0.00"), FOOD);
+                Console.WriteLine(format, "$" + totalDining, dining);
+                Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), alcohol);
+                Console.WriteLine(format, "$" + totalGasoline, gasoline);
+                Console.WriteLine(format, "$" + totalFood.ToString("0.00"), food);
 
                 Console.WriteLine("\nTotal Spent $" + total.Sum());
 
