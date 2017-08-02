@@ -10,7 +10,6 @@ namespace FinancialApp
     class Program
     {
         SqlConnection conn;
-        SqlDataReader rdr;
 
         private const string dining = "dining out";
         private const string alcohol = "alcohol";
@@ -20,7 +19,6 @@ namespace FinancialApp
         public Program()
         {
             conn = new SqlConnection("Data Source=GREG-BEE-2;Initial Catalog=spending;Integrated Security=True");
-            rdr = null;
             conn.Open();
         }
 
@@ -46,28 +44,35 @@ namespace FinancialApp
         private void monthGeneral()
         {
             Console.WriteLine("Spending for Current Month:\n");
-
-            SqlCommand monthGeneral = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
-            rdr = monthGeneral.ExecuteReader();
             Console.WriteLine();
-            if (rdr.HasRows)
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            using (rdr) 
             {
-                double total = 0;
-                const string format = "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}";
-                Console.WriteLine(String.Format(format, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
-
-                while (rdr.Read())
+                if (rdr.HasRows)
                 {
-                    total += Convert.ToDouble(rdr[1]);
-                    Console.WriteLine(String.Format(format,
-                        rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
+                    double total = 0;
+                    const string format = "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}";
+                    Console.WriteLine(String.Format(format, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
+
+                    while (rdr.Read())
+                    {
+                        total += Convert.ToDouble(rdr[1]);
+                        Console.WriteLine(String.Format(format,
+                            rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
+                    }
+
+                    Console.WriteLine("\nTotal Spent $" + total);
+
                 }
-
-                Console.WriteLine("\nTotal Spent $" + total);
-
+                else
+                    Console.WriteLine("No results");
             }
-            else
-                Console.WriteLine("No results");
+
+            rdr.Close();
+            
         }
 
         private void monthSummary()
@@ -75,48 +80,55 @@ namespace FinancialApp
             Console.WriteLine("Spending Summary for Current Month:\n");
             Console.WriteLine();
 
-            SqlCommand monthSummary = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
-            rdr = monthSummary.ExecuteReader();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
+            SqlDataReader rdr = cmd.ExecuteReader();
             
-            if (rdr.HasRows)
+            using(rdr)
             {
-                double totalDining = 0;
-                double totalAlcohol = 0;
-                double totalGasoline = 0;
-                double totalFood = 0;
-
-                while (rdr.Read())
+                if (rdr.HasRows)
                 {
-                    switch(rdr[2].ToString()){
-                        case dining:
-                            totalDining += Convert.ToDouble(rdr[1]);
-                            break;
-                        case alcohol:
-                            totalAlcohol += Convert.ToDouble(rdr[1]);
-                            break;
-                        case gasoline:
-                            totalGasoline += Convert.ToDouble(rdr[1]);
-                            break;
-                        case food:
-                            totalFood += Convert.ToDouble(rdr[1]);
-                            break;
+                    double totalDining = 0;
+                    double totalAlcohol = 0;
+                    double totalGasoline = 0;
+                    double totalFood = 0;
+
+                    while (rdr.Read())
+                    {
+                        switch (rdr[2].ToString())
+                        {
+                            case dining:
+                                totalDining += Convert.ToDouble(rdr[1]);
+                                break;
+                            case alcohol:
+                                totalAlcohol += Convert.ToDouble(rdr[1]);
+                                break;
+                            case gasoline:
+                                totalGasoline += Convert.ToDouble(rdr[1]);
+                                break;
+                            case food:
+                                totalFood += Convert.ToDouble(rdr[1]);
+                                break;
+                        }
+
                     }
-                    
+
+                    double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood };
+
+                    const string format = "{0,-10} {1,-15}";
+                    Console.WriteLine(format, "$" + totalDining, dining);
+                    Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), alcohol);
+                    Console.WriteLine(format, "$" + totalGasoline, gasoline);
+                    Console.WriteLine(format, "$" + totalFood.ToString("0.00"), food);
+
+                    Console.WriteLine("\nTotal Spent $" + total.Sum());
+
                 }
-
-                double[] total = {totalDining, totalAlcohol, totalGasoline, totalFood};
-
-                const string format = "{0,-10} {1,-15}";
-                Console.WriteLine(format, "$" + totalDining, dining);
-                Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), alcohol);
-                Console.WriteLine(format, "$" + totalGasoline, gasoline);
-                Console.WriteLine(format, "$" + totalFood.ToString("0.00"), food);
-
-                Console.WriteLine("\nTotal Spent $" + total.Sum());
-
+                else
+                    Console.WriteLine("No results");
             }
-            else
-                Console.WriteLine("No results");
+
+            rdr.Close();
+            
         }
 
         private string getMonthBegin()
@@ -169,7 +181,6 @@ namespace FinancialApp
                     Console.WriteLine("Not a valid integer\n");
             }
 
-            p.rdr.Close();
             p.conn.Close();
 
             Console.ReadLine();
