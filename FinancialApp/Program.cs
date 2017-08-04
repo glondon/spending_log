@@ -198,12 +198,13 @@ namespace FinancialApp
                     
                     
                 }
-
-                //TODO fix - only showing 1 error... needs indexing again...
-                if(errors.ToArray().Length > 0)
+                
+                if(errors.Count > 0)
                 {
-                    foreach(var error in errors)
-                        Console.WriteLine(error + "\n");
+                    string[] err = errors.ToArray();
+
+                    foreach(var e in err)
+                        Console.WriteLine(e);
 
                     Console.WriteLine("Select option 4 to try again\n");
 
