@@ -145,7 +145,6 @@ namespace FinancialApp
 
             bool validating = true;
             string[] separater = { "," };
-            int items = 0;
 
             string newExpense = Console.ReadLine();
             
@@ -165,33 +164,48 @@ namespace FinancialApp
                     string payment;
                     DateTime date;
 
-                    //TODO fix validation of items..
+                    int index = 0;
                     foreach (var item in split)
                     {
+                        switch(index)
+                        {
+                            case 0:
+                                if (Double.TryParse(item.ToString().Trim(), out doubleCheck))
+                                    cost = Convert.ToDouble(item.ToString().Trim());
+                                else
+                                    errors.Add("Cost must be of type double");
+                                break;
+                            case 1:
+                                if (categories.Contains(item.ToString().Trim()))
+                                    category = item.ToString().Trim();
+                                else
+                                    errors.Add("Category doesn't exist");
+                                break;
+                            case 2:
+                                if (paymentTypes.Contains(item.ToString().Trim()))
+                                    payment = item.ToString().Trim();
+                                else
+                                    errors.Add("Payment Type doesn't exist");
+                                break;
+                            case 3:
+                                //TODO validate date
+                                break;
 
-                        if(Double.TryParse(item[0].ToString().Trim(), out doubleCheck))
-                            cost = Convert.ToDouble(item[0].ToString().Trim());
-                        else
-                            errors.Add("Cost must be of type double");
+                        }
 
-                        if(categories.Contains(item[1].ToString().Trim()))
-                            category = item[1].ToString().Trim();
-                        else
-                            errors.Add("Category doesn't exist");
-
-                        if(paymentTypes.Contains(item[2].ToString().Trim()))
-                            payment = item[2].ToString().Trim();
-                        else
-                            errors.Add("Payment Type doesn't exist");
+                        index++;
                     }
                     
                     
                 }
 
+                //TODO fix - only showing 1 error... needs indexing again...
                 if(errors.ToArray().Length > 0)
                 {
                     foreach(var error in errors)
                         Console.WriteLine(error + "\n");
+
+                    Console.WriteLine("Select option 4 to try again\n");
 
                     validating = false;
                     
