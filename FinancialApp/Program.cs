@@ -16,6 +16,13 @@ namespace FinancialApp
         private const string food = "food";
         private const string gasoline = "gasoline";
 
+        private const string visaChase = "visa - chase";
+        private const string masterUsaa = "master - usaa";
+        private const string cash = "cash";
+
+        private string[] paymentTypes = { visaChase, masterUsaa, cash };
+        private string[] categories = { dining, alcohol, gasoline, food };
+
         public Program()
         {
             conn = new SqlConnection("Data Source=GREG-BEE-2;Initial Catalog=spending;Integrated Security=True");
@@ -131,6 +138,50 @@ namespace FinancialApp
             
         }
 
+        private void addExpense()
+        {
+            Console.WriteLine("Enter New Expense:\n");
+            Console.WriteLine("Separate by commas: Ex -> Cost, Category, Payment Type, Date\n");
+
+            bool validating = true;
+            string[] separater = { "," };
+            int items = 0;
+
+            string newExpense = Console.ReadLine();
+            
+            string[] split = newExpense.Split(separater, StringSplitOptions.RemoveEmptyEntries);
+            string[] errors = new string[10];
+
+            while(validating)
+            {
+                if (split.Length != 4)
+                    errors[items] = "You must only enter 4 characters";
+                else
+                {
+                    double doubleCheck;
+                    DateTime temp;
+
+                    foreach (var item in split)
+                        Console.WriteLine(item.Trim() + "\n");
+                    
+                }
+
+                if(errors.Length > 0)
+                {
+                    foreach(var error in errors)
+                        Console.WriteLine(error + "\n");
+
+                    validating = false;
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Success...\n");
+                }
+            }
+            
+        }
+
         private string getMonthBegin()
         {
             string monthStart;
@@ -165,6 +216,9 @@ namespace FinancialApp
                             break;
                         case 2:
                             p.monthSummary();
+                            break;
+                        case 4:
+                            p.addExpense();
                             break;
                         case 9:
                             Environment.Exit(0);
