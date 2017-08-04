@@ -150,23 +150,45 @@ namespace FinancialApp
             string newExpense = Console.ReadLine();
             
             string[] split = newExpense.Split(separater, StringSplitOptions.RemoveEmptyEntries);
-            string[] errors = new string[10];
+            List<string> errors = new List<string>();
 
             while(validating)
             {
                 if (split.Length != 4)
-                    errors[items] = "You must only enter 4 characters";
+                    errors.Add("You must only enter 4 characters");
                 else
                 {
                     double doubleCheck;
                     DateTime temp;
+                    double cost;
+                    string category;
+                    string payment;
+                    DateTime date;
 
+                    //TODO fix validation of items..
                     foreach (var item in split)
-                        Console.WriteLine(item.Trim() + "\n");
+                    {
+
+                        if(Double.TryParse(item[0].ToString().Trim(), out doubleCheck))
+                            cost = Convert.ToDouble(item[0].ToString().Trim());
+                        else
+                            errors.Add("Cost must be of type double");
+
+                        if(categories.Contains(item[1].ToString().Trim()))
+                            category = item[1].ToString().Trim();
+                        else
+                            errors.Add("Category doesn't exist");
+
+                        if(paymentTypes.Contains(item[2].ToString().Trim()))
+                            payment = item[2].ToString().Trim();
+                        else
+                            errors.Add("Payment Type doesn't exist");
+                    }
+                    
                     
                 }
 
-                if(errors.Length > 0)
+                if(errors.ToArray().Length > 0)
                 {
                     foreach(var error in errors)
                         Console.WriteLine(error + "\n");
