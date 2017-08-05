@@ -316,6 +316,53 @@ namespace FinancialApp
                 Console.WriteLine("Invalid ID entered - choose step 6 to try again...\n");
         }
 
+        private void editExpense()
+        {
+            Console.Write("Edit expense: Enter ID of expense to edit\n");
+            int idEntered;
+            string id = Console.ReadLine();
+
+            if(int.TryParse(id, out idEntered))
+            {
+                idEntered = Int32.Parse(id);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE Id = @id", conn);
+                cmd.Parameters.AddWithValue("id", idEntered);
+
+                using (SqlDataReader rdr = cmd.ExecuteReader())
+                {
+                    if (rdr.HasRows)
+                    {
+                        Console.WriteLine("Confirm you want to edit:\n");
+                        while(rdr.Read())
+                        {
+                            Console.WriteLine(rdr[0] + " " + rdr[1] + " " + rdr[2] + " " + rdr[3] + " " + Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy") + "\n");
+                        }
+
+                        rdr.Close();
+
+                        Console.WriteLine("Do you want edit id: " + idEntered + "? Y or N");
+                        string confirm = Console.ReadLine();
+
+                        switch (confirm.ToUpper())
+                        {
+                            case "Y":
+                                //TODO create edit
+                                //TODO do field by field - giving option to skip if editing not needed...
+                                break;
+                            case "N":
+                                Console.WriteLine("Edit cancelled - Selection option 5 to edit another item");
+                                break;
+                            default:
+                                Console.WriteLine("You can only enter Y or N - start over...");
+                                break;
+                        }   
+                    }
+                    else
+                        Console.WriteLine("ID: " + idEntered + " doesn't exist - Select option 5 to edit another item");
+                }
+            }
+        }
+
         private string getMonthBegin()
         {
             string monthStart;
