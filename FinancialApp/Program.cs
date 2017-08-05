@@ -348,6 +348,13 @@ namespace FinancialApp
                             case "Y":
                                 //TODO create edit
                                 //TODO do field by field - giving option to skip if editing not needed...
+                                Console.WriteLine("Enter new cost - (enter 0 to leave cost the same)");
+                                double costEntered;
+                                string cost = Console.ReadLine();
+                                if(Double.TryParse(cost, out costEntered))
+                                {
+
+                                }
                                 break;
                             case "N":
                                 Console.WriteLine("Edit cancelled - Selection option 5 to edit another item");
@@ -361,6 +368,8 @@ namespace FinancialApp
                         Console.WriteLine("ID: " + idEntered + " doesn't exist - Select option 5 to edit another item");
                 }
             }
+            else
+                Console.WriteLine("Not a valid ID - Select option 5 to try again");
         }
 
         private string getMonthBegin()
