@@ -93,65 +93,64 @@ namespace FinancialApp
             Console.WriteLine("Spending Summary for Current Month:\n");
             Console.WriteLine();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
-            SqlDataReader rdr = cmd.ExecuteReader();
-            
-            using(rdr)
+            using(SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn))
             {
-                if (rdr.HasRows)
+                using (SqlDataReader rdr = cmd.ExecuteReader())
                 {
-                    double totalDining = 0;
-                    double totalAlcohol = 0;
-                    double totalGasoline = 0;
-                    double totalFood = 0;
-                    double totalClothing = 0;
-                    double totalToiletries = 0;
-
-                    while (rdr.Read())
+                    if (rdr.HasRows)
                     {
-                        switch (rdr[2].ToString())
+                        double totalDining = 0;
+                        double totalAlcohol = 0;
+                        double totalGasoline = 0;
+                        double totalFood = 0;
+                        double totalClothing = 0;
+                        double totalToiletries = 0;
+
+                        while (rdr.Read())
                         {
-                            case dining:
-                                totalDining += Convert.ToDouble(rdr[1]);
-                                break;
-                            case alcohol:
-                                totalAlcohol += Convert.ToDouble(rdr[1]);
-                                break;
-                            case gasoline:
-                                totalGasoline += Convert.ToDouble(rdr[1]);
-                                break;
-                            case food:
-                                totalFood += Convert.ToDouble(rdr[1]);
-                                break;
-                            case toiletries:
-                                totalToiletries = Convert.ToDouble(rdr[1]);
-                                break;
-                            case clothing:
-                                totalClothing = Convert.ToDouble(rdr[1]);
-                                break;
+                            switch (rdr[2].ToString())
+                            {
+                                case dining:
+                                    totalDining += Convert.ToDouble(rdr[1]);
+                                    break;
+                                case alcohol:
+                                    totalAlcohol += Convert.ToDouble(rdr[1]);
+                                    break;
+                                case gasoline:
+                                    totalGasoline += Convert.ToDouble(rdr[1]);
+                                    break;
+                                case food:
+                                    totalFood += Convert.ToDouble(rdr[1]);
+                                    break;
+                                case toiletries:
+                                    totalToiletries = Convert.ToDouble(rdr[1]);
+                                    break;
+                                case clothing:
+                                    totalClothing = Convert.ToDouble(rdr[1]);
+                                    break;
+                            }
+
                         }
 
+                        rdr.Close();
+
+                        double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries };
+
+                        const string format = "{0,-10} {1,-15}";
+                        Console.WriteLine(format, "$" + totalDining, dining);
+                        Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), alcohol);
+                        Console.WriteLine(format, "$" + totalGasoline, gasoline);
+                        Console.WriteLine(format, "$" + totalFood.ToString("0.00"), food);
+                        Console.WriteLine(format, "$" + totalClothing, clothing);
+                        Console.WriteLine(format, "$" + totalToiletries, toiletries);
+
+                        Console.WriteLine("\nTotal Spent $" + total.Sum());
+
                     }
-
-                    double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries };
-
-                    const string format = "{0,-10} {1,-15}";
-                    Console.WriteLine(format, "$" + totalDining, dining);
-                    Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), alcohol);
-                    Console.WriteLine(format, "$" + totalGasoline, gasoline);
-                    Console.WriteLine(format, "$" + totalFood.ToString("0.00"), food);
-                    Console.WriteLine(format, "$" + totalClothing, clothing);
-                    Console.WriteLine(format, "$" + totalToiletries, toiletries);
-
-                    Console.WriteLine("\nTotal Spent $" + total.Sum());
-
+                    else
+                        Console.WriteLine("No results");
                 }
-                else
-                    Console.WriteLine("No results");
             }
-
-            rdr.Close();
-            
         }
 
         private void addExpense()
@@ -263,6 +262,68 @@ namespace FinancialApp
 
         }
 
+        private void deleteExpense()
+        {
+            Console.WriteLine("Delete an Expense - Enter the ID of the expense you would like to delete:\n");
+            int intCheck;
+            string id = Console.ReadLine();
+
+            if (int.TryParse(id, out intCheck))
+            {
+                intCheck = Int32.Parse(id);
+                using(SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE Id = @id", conn))
+                {
+                    cmd.Parameters.AddWithValue("id", intCheck);
+                   
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        if (rdr.HasRows)
+                        {
+                            Console.WriteLine("Confirm Deletion\n");
+                            while (rdr.Read())
+                            {
+                                Console.WriteLine(rdr[0] + " " + rdr[1] + " " + rdr[2] + " " + rdr[3] + " " + Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy") + "\n");
+                            }
+
+                            rdr.Close();
+
+                            Console.WriteLine("Do you want to delete id: " + intCheck + "? Y or N");
+                            string confirm = Console.ReadLine();
+
+                            switch(confirm.ToUpper())
+                            {
+                                case "Y":
+                                    string query = "DELETE FROM personal WHERE Id = @id";
+                                    using (SqlCommand delete = new SqlCommand(query, conn))
+                                    {
+                                        delete.Parameters.AddWithValue("id", intCheck);
+
+                                        int result = delete.ExecuteNonQuery();
+
+                                        if (result < 0)
+                                            Console.WriteLine("Error deleting id: " + intCheck);
+                                        else
+                                            Console.WriteLine("ID: " + intCheck + " successfully deleted");
+                                    }
+                                    break;
+                                case "N":
+                                    Console.WriteLine("Deletion cancelled - Selection option 6 to delete another item");
+                                    break;
+                                default:
+                                    Console.WriteLine("You can only enter Y or N - start over...");
+                                    break;
+                            }   
+                        }
+                        else
+                            Console.WriteLine("Couldn't find a record matching id: " + intCheck);
+                    }
+                }
+                
+            }
+            else
+                Console.WriteLine("Invalid ID entered - choose step 6 to try again...\n");
+        }
+
         private string getMonthBegin()
         {
             string monthStart;
@@ -300,6 +361,9 @@ namespace FinancialApp
                             break;
                         case 4:
                             p.addExpense();
+                            break;
+                        case 6:
+                            p.deleteExpense();
                             break;
                         case 9:
                             Environment.Exit(0);
