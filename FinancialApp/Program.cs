@@ -401,6 +401,9 @@ namespace FinancialApp
                         case 4:
                             p.addExpense();
                             break;
+                        case 5:
+                            p.editExpense();
+                            break;
                         case 6:
                             p.deleteExpense();
                             break;
