@@ -151,19 +151,21 @@ namespace FinancialApp
             string[] split = newExpense.Split(separater, StringSplitOptions.RemoveEmptyEntries);
             List<string> errors = new List<string>();
 
+            double doubleCheck;
+            DateTime temp;
+            double cost = 0;
+            string category = "";
+            string payment = "";
+            DateTime date = DateTime.Now;
+
+
             while(validating)
             {
                 if (split.Length != 4)
                     errors.Add("You must only enter 4 characters");
                 else
                 {
-                    double doubleCheck;
-                    DateTime temp;
-                    double cost;
-                    string category;
-                    string payment;
-                    DateTime date;
-
+                    
                     int index = 0;
                     foreach (var item in split)
                     {
@@ -188,7 +190,11 @@ namespace FinancialApp
                                     errors.Add("Payment Type doesn't exist");
                                 break;
                             case 3:
-                                //TODO validate date
+                                if (DateTime.TryParse(item.ToString().Trim(), out temp))
+                                    date = Convert.ToDateTime(item.ToString().Trim());
+                                else
+                                    errors.Add("Date incorrectly formatted");
+
                                 break;
 
                         }
@@ -214,6 +220,8 @@ namespace FinancialApp
                 else
                 {
                     Console.WriteLine("Success...\n");
+                    Console.WriteLine("Values: " + cost + ", " + category + ", " + payment + ", " + date);
+                    validating = false;
                 }
             }
             
