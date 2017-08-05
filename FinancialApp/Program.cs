@@ -141,7 +141,7 @@ namespace FinancialApp
         private void addExpense()
         {
             Console.WriteLine("Enter New Expense:\n");
-            Console.WriteLine("Separate by commas: Ex -> Cost, Category, Payment Type, Date\n");
+            Console.WriteLine("Separate by commas: Ex -> Cost, Category, Payment Type, Date (0 for today)\n");
 
             string[] separater = { "," };
 
@@ -151,6 +151,7 @@ namespace FinancialApp
             List<string> errors = new List<string>();
 
             double doubleCheck;
+            int intCheck;
             DateTime temp;
             double cost = 0;
             string category = "";
@@ -185,11 +186,23 @@ namespace FinancialApp
                                 errors.Add("Payment Type doesn't exist");
                                 break;
                         case 3:
-                            if (DateTime.TryParse(item.ToString().Trim(), out temp))
-                                date = Convert.ToDateTime(item.ToString().Trim());
+                            if(int.TryParse(item.ToString().Trim(), out intCheck))
+                            {
+                                if(item.ToString().Trim() == "0")
+                                {
+                                    //good to go..
+                                }
+                                else
+                                    errors.Add("Only enter 0 for today's date");
+                            }
                             else
-                                errors.Add("Date incorrectly formatted");
-                                break;
+                            {
+                                if (DateTime.TryParse(item.ToString().Trim(), out temp))
+                                    date = Convert.ToDateTime(item.ToString().Trim());
+                                else
+                                    errors.Add("Date incorrectly formatted");
+                            }
+                            break;
 
                     }
 
