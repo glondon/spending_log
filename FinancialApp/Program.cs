@@ -352,14 +352,71 @@ namespace FinancialApp
                         switch (confirm.ToUpper())
                         {
                             case "Y":
-                                //TODO create edit
-                                //TODO do field by field - giving option to skip if editing not needed...
                                 Console.WriteLine("Enter new cost - (enter 0 to leave cost the same)");
                                 double costEntered;
+                                bool costEdit;
                                 string cost = Console.ReadLine();
                                 if(Double.TryParse(cost, out costEntered))
                                 {
+                                    costEntered = Double.Parse(cost);
+                                    costEdit = true;
 
+                                    if (costEntered == 0)
+                                        costEdit = false;
+                                }
+                                else
+                                    costEdit = false;
+
+                                Console.WriteLine("Enter new category - (enter 0 to leave category the same)");
+                                int intCheck;
+                                bool categoryEdit;
+                                string category = Console.ReadLine();                                
+                                if(Int32.TryParse(category, out intCheck))
+                                {
+                                    intCheck = Int32.Parse(category);
+                                    if(intCheck == 0)
+                                        categoryEdit = false;
+                                }
+                                else
+                                {
+                                    if (categories.Contains(category))
+                                        categoryEdit = true;
+                                }
+
+                                Console.WriteLine("Enter new payment type - (enter 0 to leave payment typ the same)");
+                                int typeCheck;
+                                bool typeEdit;
+                                string paymentType = Console.ReadLine();
+                                if(Int32.TryParse(paymentType, out typeCheck))
+                                {
+                                    typeCheck = Int32.Parse(paymentType);
+                                    if (typeCheck == 0)
+                                        typeEdit = false;
+                                }
+                                else
+                                {
+                                    if (paymentTypes.Contains(paymentType))
+                                        typeEdit = true;
+                                }
+                                Console.WriteLine("Enter new date - (enter 0 to leave date the same)");
+                                int dateCheck;
+                                bool dateEdit;
+                                DateTime dateVal;
+                                string date = Console.ReadLine();
+                                if(Int32.TryParse(date, out dateCheck))
+                                {
+                                    dateCheck = Int32.Parse(date);
+                                    if (dateCheck == 0)
+                                        dateEdit = false;
+                                }
+                                else
+                                {
+                                    if (DateTime.TryParse(date, out dateVal))
+                                    {
+                                       dateVal = Convert.ToDateTime(date);
+                                       dateEdit = true;
+                                    }
+                                       
                                 }
                                 break;
                             case "N":
