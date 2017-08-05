@@ -157,10 +157,8 @@ namespace FinancialApp
             string payment = "";
             DateTime date = DateTime.Now;
 
-
-            
             if (split.Length != 4)
-                errors.Add("You must only enter 4 characters");
+                errors.Add("You can only enter 4 items");
             else
             {    
                 int index = 0;
