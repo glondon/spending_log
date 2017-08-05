@@ -213,10 +213,27 @@ namespace FinancialApp
             }
             else
             {
-                Console.WriteLine("Success...\n");
-                Console.WriteLine("Values: " + cost + ", " + category + ", " + payment + ", " + date);
+                Console.WriteLine("Inserting Values: " + cost + ", " + category + ", " + payment + ", " + date);
+
+                string query = "INSERT INTO personal (cost, category, payment_type, date) VALUES (@cost, @category, @payment, @date)";
+
+                using(SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@cost", cost);
+                    cmd.Parameters.AddWithValue("@category", category);
+                    cmd.Parameters.AddWithValue("@payment", payment);
+                    cmd.Parameters.AddWithValue("@date", date);
+
+                    int result = cmd.ExecuteNonQuery();
+
+                    if (result < 0)
+                        Console.WriteLine("Error adding data...");
+                    else
+                        Console.WriteLine("Expense successfully added..");
+                }
+                
             }
-            
+
         }
 
         private string getMonthBegin()
