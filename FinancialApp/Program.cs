@@ -143,7 +143,6 @@ namespace FinancialApp
             Console.WriteLine("Enter New Expense:\n");
             Console.WriteLine("Separate by commas: Ex -> Cost, Category, Payment Type, Date\n");
 
-            bool validating = true;
             string[] separater = { "," };
 
             string newExpense = Console.ReadLine();
@@ -159,70 +158,63 @@ namespace FinancialApp
             DateTime date = DateTime.Now;
 
 
-            while(validating)
-            {
-                if (split.Length != 4)
-                    errors.Add("You must only enter 4 characters");
-                else
+            
+            if (split.Length != 4)
+                errors.Add("You must only enter 4 characters");
+            else
+            {    
+                int index = 0;
+                foreach (var item in split)
                 {
-                    
-                    int index = 0;
-                    foreach (var item in split)
+                    switch(index)
                     {
-                        switch(index)
-                        {
-                            case 0:
-                                if (Double.TryParse(item.ToString().Trim(), out doubleCheck))
-                                    cost = Convert.ToDouble(item.ToString().Trim());
-                                else
-                                    errors.Add("Cost must be of type double");
+                        case 0:
+                            if (Double.TryParse(item.ToString().Trim(), out doubleCheck))
+                                cost = Convert.ToDouble(item.ToString().Trim());
+                            else
+                                errors.Add("Cost must be of type double");
                                 break;
-                            case 1:
-                                if (categories.Contains(item.ToString().Trim()))
-                                    category = item.ToString().Trim();
-                                else
-                                    errors.Add("Category doesn't exist");
+                        case 1:
+                            if (categories.Contains(item.ToString().Trim()))
+                                category = item.ToString().Trim();
+                            else
+                                errors.Add("Category doesn't exist");
                                 break;
-                            case 2:
-                                if (paymentTypes.Contains(item.ToString().Trim()))
-                                    payment = item.ToString().Trim();
-                                else
-                                    errors.Add("Payment Type doesn't exist");
+                        case 2:
+                            if (paymentTypes.Contains(item.ToString().Trim()))
+                                payment = item.ToString().Trim();
+                            else
+                                errors.Add("Payment Type doesn't exist");
                                 break;
-                            case 3:
-                                if (DateTime.TryParse(item.ToString().Trim(), out temp))
-                                    date = Convert.ToDateTime(item.ToString().Trim());
-                                else
-                                    errors.Add("Date incorrectly formatted");
-
+                        case 3:
+                            if (DateTime.TryParse(item.ToString().Trim(), out temp))
+                                date = Convert.ToDateTime(item.ToString().Trim());
+                            else
+                                errors.Add("Date incorrectly formatted");
                                 break;
 
-                        }
-
-                        index++;
                     }
-                    
-                    
+
+                    index++;
                 }
+                    
+                    
+            }
                 
-                if(errors.Count > 0)
-                {
-                    string[] err = errors.ToArray();
+            if(errors.Count > 0)
+            {
+                string[] err = errors.ToArray();
 
-                    foreach(var e in err)
-                        Console.WriteLine(e);
+                foreach(var e in err)
+                    Console.WriteLine(e);
 
-                    Console.WriteLine("Select option 4 to try again\n");
-
-                    validating = false;
+                Console.WriteLine("Select option 4 to try again\n");
                     
-                }
-                else
-                {
-                    Console.WriteLine("Success...\n");
-                    Console.WriteLine("Values: " + cost + ", " + category + ", " + payment + ", " + date);
-                    validating = false;
-                }
+            }
+            else
+            {
+                Console.WriteLine("Success...\n");
+                Console.WriteLine("Values: " + cost + ", " + category + ", " + payment + ", " + date);
             }
             
         }
