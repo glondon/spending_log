@@ -354,7 +354,7 @@ namespace FinancialApp
                             case "Y":
                                 Console.WriteLine("Enter new cost - (enter 0 to leave cost the same)");
                                 double costEntered;
-                                bool costEdit;
+                                bool costEdit = true;
                                 string cost = Console.ReadLine();
                                 if(Double.TryParse(cost, out costEntered))
                                 {
@@ -364,12 +364,10 @@ namespace FinancialApp
                                     if (costEntered == 0)
                                         costEdit = false;
                                 }
-                                else
-                                    costEdit = false;
 
                                 Console.WriteLine("Enter new category - (enter 0 to leave category the same)");
                                 int intCheck;
-                                bool categoryEdit;
+                                bool categoryEdit = true;
                                 string category = Console.ReadLine();                                
                                 if(Int32.TryParse(category, out intCheck))
                                 {
@@ -380,12 +378,18 @@ namespace FinancialApp
                                 else
                                 {
                                     if (categories.Contains(category))
-                                        categoryEdit = true;
+                                    {
+                                        //good to go..
+
+                                    }
+                                    else
+                                        Console.WriteLine("Category doesn't exist");
+                                      
                                 }
 
                                 Console.WriteLine("Enter new payment type - (enter 0 to leave payment typ the same)");
                                 int typeCheck;
-                                bool typeEdit;
+                                bool typeEdit = true;
                                 string paymentType = Console.ReadLine();
                                 if(Int32.TryParse(paymentType, out typeCheck))
                                 {
@@ -396,11 +400,16 @@ namespace FinancialApp
                                 else
                                 {
                                     if (paymentTypes.Contains(paymentType))
-                                        typeEdit = true;
+                                    {
+                                        //good to go..
+                                    }
+                                    else
+                                        Console.WriteLine("Payment type doesn't exist");
+                                       
                                 }
                                 Console.WriteLine("Enter new date - (enter 0 to leave date the same)");
                                 int dateCheck;
-                                bool dateEdit;
+                                bool dateEdit = true;
                                 DateTime dateVal;
                                 string date = Console.ReadLine();
                                 if(Int32.TryParse(date, out dateCheck))
@@ -412,12 +421,19 @@ namespace FinancialApp
                                 else
                                 {
                                     if (DateTime.TryParse(date, out dateVal))
-                                    {
-                                       dateVal = Convert.ToDateTime(date);
-                                       dateEdit = true;
-                                    }
+                                        dateVal = Convert.ToDateTime(date);
+                                    else
+                                        Console.WriteLine("Date not properly formatted");
                                        
                                 }
+                                if (costEdit)
+                                    Console.WriteLine("Cost edit true");
+                                if (categoryEdit)
+                                    Console.WriteLine("Category edit true");
+                                if (typeEdit)
+                                    Console.WriteLine("Type edit true");
+                                if (dateEdit)
+                                    Console.WriteLine("Date edit true");
                                 break;
                             case "N":
                                 Console.WriteLine("Edit cancelled - Selection option 5 to edit another item");
