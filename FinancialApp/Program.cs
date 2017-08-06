@@ -432,7 +432,7 @@ namespace FinancialApp
                                     {
                                         dateVal = Convert.ToDateTime(date);
                                         dateEdit = true;
-                                    
+                                    }
                                 }
 
                                 if(costEdit || categoryEdit || typeEdit || dateEdit)
