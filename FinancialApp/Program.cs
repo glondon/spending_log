@@ -22,9 +22,10 @@ namespace FinancialApp
 
         private const string visaChase = "visa - chase";
         private const string masterUsaa = "master - usaa";
+        private const string visaNavyfcu = "visa - navyfcu";
         private const string cash = "cash";
 
-        private string[] paymentTypes = { visaChase, masterUsaa, cash };
+        private string[] paymentTypes = { visaChase, masterUsaa, visaNavyfcu, cash };
         private string[] categories = { dining, alcohol, gasoline, food, toiletries, clothing, entertainment, tobacco };
 
         //master - usaa statement 18th of every month
@@ -361,7 +362,7 @@ namespace FinancialApp
                             case "Y":
                                 Console.WriteLine("Enter new cost - (enter 0 to leave cost the same)");
                                 double costEntered;
-                                bool costEdit = true;
+                                bool costEdit = false;
                                 string cost = Console.ReadLine();
                                 if(Double.TryParse(cost, out costEntered))
                                 {
@@ -374,7 +375,7 @@ namespace FinancialApp
 
                                 Console.WriteLine("Enter new category - (enter 0 to leave category the same)");
                                 int intCheck;
-                                bool categoryEdit = true;
+                                bool categoryEdit = false;
                                 string category = Console.ReadLine();                                
                                 if(Int32.TryParse(category, out intCheck))
                                 {
@@ -385,20 +386,19 @@ namespace FinancialApp
                                 else
                                 {
                                     if (categories.Contains(category))
-                                    {
-                                        //good to go..
-
-                                    }
+                                        categoryEdit = true;
                                     else
+                                    {
                                         Console.WriteLine("Category doesn't exist");
-                                      
+                                        categoryEdit = false;
+                                    } 
                                 }
 
                                 Console.WriteLine("Enter new payment type - (enter 0 to leave payment typ the same)");
                                 int typeCheck;
-                                bool typeEdit = true;
+                                bool typeEdit = false;
                                 string paymentType = Console.ReadLine();
-                                if(Int32.TryParse(paymentType, out typeCheck))
+                                if (Int32.TryParse(paymentType, out typeCheck))
                                 {
                                     typeCheck = Int32.Parse(paymentType);
                                     if (typeCheck == 0)
@@ -407,19 +407,20 @@ namespace FinancialApp
                                 else
                                 {
                                     if (paymentTypes.Contains(paymentType))
-                                    {
-                                        //good to go..
-                                    }
+                                        typeEdit = true;
                                     else
+                                    {
                                         Console.WriteLine("Payment type doesn't exist");
-                                       
+                                        typeEdit = false;
+                                    }
                                 }
+
                                 Console.WriteLine("Enter new date - (enter 0 to leave date the same)");
                                 int dateCheck;
-                                bool dateEdit = true;
+                                bool dateEdit = false;
                                 DateTime dateVal;
                                 string date = Console.ReadLine();
-                                if(Int32.TryParse(date, out dateCheck))
+                                if (Int32.TryParse(date, out dateCheck))
                                 {
                                     dateCheck = Int32.Parse(date);
                                     if (dateCheck == 0)
@@ -428,18 +429,93 @@ namespace FinancialApp
                                 else
                                 {
                                     if (DateTime.TryParse(date, out dateVal))
-                                       dateVal = Convert.ToDateTime(date);
-                
-                                       
+                                    {
+                                        dateVal = Convert.ToDateTime(date);
+                                        dateEdit = true;
+                                    
                                 }
-                                if (costEdit)
-                                    Console.WriteLine("Cost edit true");
-                                if (categoryEdit)
-                                    Console.WriteLine("Category edit true");
-                                if (typeEdit)
-                                    Console.WriteLine("Type edit true");
-                                if (dateEdit)
-                                    Console.WriteLine("Date edit true");
+
+                                if(costEdit || categoryEdit || typeEdit || dateEdit)
+                                {
+                                    string query = "Update personal ";
+                                    List<string> toUpdate = new List<string>();
+
+                                    if (costEdit)
+                                    {
+                                        Console.WriteLine("Updating Cost");
+                                        toUpdate.Add("cost");
+                                    }
+                                        
+                                    if (categoryEdit)
+                                    {
+                                        Console.WriteLine("Updating Category");
+                                        toUpdate.Add("category");
+                                    }
+                                        
+                                    if (typeEdit)
+                                    {
+                                        Console.WriteLine("Updating Payment Type");
+                                        toUpdate.Add("type");
+                                    }
+                                        
+                                    if (dateEdit)
+                                    {
+                                        Console.WriteLine("Updating Date");
+                                        toUpdate.Add("date");
+                                    }
+
+                                    string[] updateArray = toUpdate.ToArray();
+                                    string last = updateArray.Last();
+
+                                    foreach(var update in updateArray)
+                                    {
+                                        if(update == last)
+                                        {
+                                            switch(update)
+                                            {
+                                                case "cost":
+                                                    query += "SET cost = @cost ";
+                                                    break;
+                                                case "category":
+                                                    query += "SET category = @category ";
+                                                    break;
+                                                case "type":
+                                                    query += "SET payment_type = @type ";
+                                                    break;
+                                                case "date":
+                                                    query += "SET date = @date ";
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            switch(update)
+                                            {
+                                                case "cost":
+                                                    query += "SET cost = @cost, ";
+                                                    break;
+                                                case "category":
+                                                    query += "SET category = @category, ";
+                                                    break;
+                                                case "type":
+                                                    query += "SET payment_type = @type, ";
+                                                    break;
+                                                case "date":
+                                                    query += "SET date = @date, ";
+                                                    break;
+                                            }
+                                        }
+                                           
+                                    }
+
+                                    query += "WHERE id = @id";
+
+                                    Console.WriteLine(query);
+                                        
+                                }
+                                else
+                                    Console.WriteLine("Nothing was selected to be updated. Operation aborted..");
+                                
                                 break;
                             case "N":
                                 Console.WriteLine("Edit cancelled - Selection option 5 to edit another item");
