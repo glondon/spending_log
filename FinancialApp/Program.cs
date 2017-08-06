@@ -510,7 +510,26 @@ namespace FinancialApp
 
                                     query += "WHERE id = @id";
 
-                                    Console.WriteLine(query);
+                                    using (SqlCommand update = new SqlCommand(query, conn))
+                                    {
+                                        update.Parameters.AddWithValue("id", idEntered);
+
+                                        if (costEdit)
+                                            update.Parameters.AddWithValue("cost", cost);
+                                        if (categoryEdit)
+                                            update.Parameters.AddWithValue("category", category);
+                                        if (typeEdit)
+                                            update.Parameters.AddWithValue("type", paymentType);
+                                        if (dateEdit)
+                                            update.Parameters.AddWithValue("date", date);
+
+                                        int result = update.ExecuteNonQuery();
+
+                                        if (result < 0)
+                                            Console.WriteLine("Problem updaing id: " + idEntered);
+                                        else
+                                            Console.WriteLine("ID: " + idEntered + " updated...");
+                                    }
                                         
                                 }
                                 else
