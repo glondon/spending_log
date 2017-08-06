@@ -18,13 +18,14 @@ namespace FinancialApp
         private const string toiletries = "toiletries";
         private const string clothing = "clothing";
         private const string entertainment = "entertainment";
+        private const string tobacco = "tobacco";
 
         private const string visaChase = "visa - chase";
         private const string masterUsaa = "master - usaa";
         private const string cash = "cash";
 
         private string[] paymentTypes = { visaChase, masterUsaa, cash };
-        private string[] categories = { dining, alcohol, gasoline, food, toiletries, clothing, entertainment };
+        private string[] categories = { dining, alcohol, gasoline, food, toiletries, clothing, entertainment, tobacco };
 
         //master - usaa statement 18th of every month
         //visa - chase statement 15th of every month
@@ -67,7 +68,7 @@ namespace FinancialApp
                 if (rdr.HasRows)
                 {
                     double total = 0;
-                    const string format = "{0,-3} | {1,-8} | {2,-10} | {3,-15} | {4,-10}";
+                    const string format = "{0,-3} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
                     Console.WriteLine(String.Format(format, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
 
                     while (rdr.Read())
@@ -105,6 +106,7 @@ namespace FinancialApp
                     double totalClothing = 0;
                     double totalToiletries = 0;
                     double totalEntertainment = 0;
+                    double totalTobacco = 0;
 
                     while (rdr.Read())
                     {
@@ -131,13 +133,17 @@ namespace FinancialApp
                             case entertainment:
                                 totalEntertainment = Convert.ToDouble(rdr[1]);
                                 break;
+                            case tobacco:
+                                totalTobacco = Convert.ToDouble(rdr[1]);
+                                break;
                         }
 
                     }
 
                     rdr.Close();
 
-                    double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries, totalEntertainment };
+                    double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries,
+                                       totalEntertainment, totalTobacco };
 
                     const string format = "{0,-10} {1,-15}";
                     Console.WriteLine(format, "$" + totalDining, dining);
@@ -147,6 +153,7 @@ namespace FinancialApp
                     Console.WriteLine(format, "$" + totalClothing, clothing);
                     Console.WriteLine(format, "$" + totalToiletries, toiletries);
                     Console.WriteLine(format, "$" + totalEntertainment, entertainment);
+                    Console.WriteLine(format, "$" + totalTobacco, tobacco);
 
                     Console.WriteLine("\nTotal Spent $" + total.Sum());
 
@@ -421,9 +428,8 @@ namespace FinancialApp
                                 else
                                 {
                                     if (DateTime.TryParse(date, out dateVal))
-                                        dateVal = Convert.ToDateTime(date);
-                                    else
-                                        Console.WriteLine("Date not properly formatted");
+                                       dateVal = Convert.ToDateTime(date);
+                
                                        
                                 }
                                 if (costEdit)
