@@ -563,6 +563,17 @@ namespace FinancialApp
             return monthStart;
         }
 
+        private string getVisaChaseBegin()
+        {
+            string statementStart;
+
+            DateTime date = DateTime.Now;
+            DateTime statementBegin = new DateTime(date.Year, date.Month - 1, 15);
+            statementStart = statementBegin.ToString("d");
+
+            return statementStart;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("\n---------- Financial App - Personal Spending Summary ----------\n");
@@ -586,6 +597,9 @@ namespace FinancialApp
                             break;
                         case 2:
                             p.monthSummary();
+                            break;
+                        case 3:
+                            Console.WriteLine(p.getVisaChaseBegin());
                             break;
                         case 4:
                             p.addExpense();
