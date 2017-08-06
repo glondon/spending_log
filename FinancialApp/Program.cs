@@ -418,7 +418,7 @@ namespace FinancialApp
                                 Console.WriteLine("Enter new date - (enter 0 to leave date the same)");
                                 int dateCheck;
                                 bool dateEdit = false;
-                                DateTime dateVal;
+                                DateTime dateVal = DateTime.Now;
                                 string date = Console.ReadLine();
                                 if (Int32.TryParse(date, out dateCheck))
                                 {
@@ -521,7 +521,7 @@ namespace FinancialApp
                                         if (typeEdit)
                                             update.Parameters.AddWithValue("type", paymentType);
                                         if (dateEdit)
-                                            update.Parameters.AddWithValue("date", date);
+                                            update.Parameters.AddWithValue("date", dateVal);
 
                                         int result = update.ExecuteNonQuery();
 
