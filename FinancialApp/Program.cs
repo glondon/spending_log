@@ -372,6 +372,11 @@ namespace FinancialApp
                                     if (costEntered == 0)
                                         costEdit = false;
                                 }
+                                else
+                                {
+                                    costEdit = false;
+                                    Console.WriteLine("Invalid cost entered..");
+                                }
 
                                 Console.WriteLine("Enter new category - (enter 0 to leave category the same)");
                                 int intCheck;
@@ -430,6 +435,12 @@ namespace FinancialApp
                                 {
                                     if (DateTime.TryParse(date, out dateVal))
                                         dateEdit = true;
+                                    else
+                                    {
+                                        dateEdit = false;
+                                        Console.WriteLine("Invalid date entered..");
+                                    }
+                                       
                                 }
 
                                 if(costEdit || categoryEdit || typeEdit || dateEdit)
@@ -439,25 +450,25 @@ namespace FinancialApp
 
                                     if (costEdit)
                                     {
-                                        Console.WriteLine("Updating Cost");
+                                        Console.WriteLine("Updating Cost to: " + cost);
                                         toUpdate.Add("cost");
                                     }
                                         
                                     if (categoryEdit)
                                     {
-                                        Console.WriteLine("Updating Category");
+                                        Console.WriteLine("Updating Category to: " + category);
                                         toUpdate.Add("category");
                                     }
                                         
                                     if (typeEdit)
                                     {
-                                        Console.WriteLine("Updating Payment Type");
+                                        Console.WriteLine("Updating Payment Type to: " + paymentType);
                                         toUpdate.Add("type");
                                     }
                                         
                                     if (dateEdit)
                                     {
-                                        Console.WriteLine("Updating Date");
+                                        Console.WriteLine("Updating Date to: " + dateVal);
                                         toUpdate.Add("date");
                                     }
 
