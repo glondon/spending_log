@@ -429,10 +429,7 @@ namespace FinancialApp
                                 else
                                 {
                                     if (DateTime.TryParse(date, out dateVal))
-                                    {
-                                        dateVal = Convert.ToDateTime(date);
                                         dateEdit = true;
-                                    }
                                 }
 
                                 if(costEdit || categoryEdit || typeEdit || dateEdit)
