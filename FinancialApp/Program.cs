@@ -111,7 +111,7 @@ namespace FinancialApp
 
                     while (rdr.Read())
                     {
-                        switch (rdr[2].ToString())
+                        switch (rdr[2].ToString().Trim())
                         {
                             case dining:
                                 totalDining += Convert.ToDouble(rdr[1]);
@@ -126,16 +126,16 @@ namespace FinancialApp
                                 totalFood += Convert.ToDouble(rdr[1]);
                                 break;
                             case toiletries:
-                                totalToiletries = Convert.ToDouble(rdr[1]);
+                                totalToiletries += Convert.ToDouble(rdr[1]);
                                 break;
                             case clothing:
-                                totalClothing = Convert.ToDouble(rdr[1]);
+                                totalClothing += Convert.ToDouble(rdr[1]);
                                 break;
                             case entertainment:
-                                totalEntertainment = Convert.ToDouble(rdr[1]);
+                                totalEntertainment += Convert.ToDouble(rdr[1]);
                                 break;
                             case tobacco:
-                                totalTobacco = Convert.ToDouble(rdr[1]);
+                                totalTobacco += Convert.ToDouble(rdr[1]);
                                 break;
                         }
 
