@@ -19,6 +19,7 @@ namespace FinancialApp
         private const string clothing = "clothing";
         private const string entertainment = "entertainment";
         private const string tobacco = "tobacco";
+        private const string tips = "tips";
 
         private const string visaChase = "visa - chase";
         private const string masterUsaa = "master - usaa";
@@ -26,7 +27,7 @@ namespace FinancialApp
         private const string cash = "cash";
 
         private string[] paymentTypes = { visaChase, masterUsaa, visaNavyfcu, cash };
-        private string[] categories = { dining, alcohol, gasoline, food, toiletries, clothing, entertainment, tobacco };
+        private string[] categories = { dining, alcohol, gasoline, food, toiletries, clothing, entertainment, tobacco, tips };
 
         //master - usaa statement 18th of every month
         //visa - chase statement 15th of every month
@@ -108,6 +109,7 @@ namespace FinancialApp
                     double totalToiletries = 0;
                     double totalEntertainment = 0;
                     double totalTobacco = 0;
+                    double totalTips = 0;
 
                     while (rdr.Read())
                     {
@@ -137,6 +139,9 @@ namespace FinancialApp
                             case tobacco:
                                 totalTobacco += Convert.ToDouble(rdr[1]);
                                 break;
+                            case tips:
+                                totalTips += Convert.ToDouble(rdr[1]);
+                                break;
                         }
 
                     }
@@ -144,7 +149,7 @@ namespace FinancialApp
                     rdr.Close();
 
                     double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries,
-                                       totalEntertainment, totalTobacco };
+                                       totalEntertainment, totalTobacco, totalTips };
 
                     const string format = "{0,-10} {1,-15}";
                     Console.WriteLine(format, "$" + totalDining, dining);
@@ -155,6 +160,7 @@ namespace FinancialApp
                     Console.WriteLine(format, "$" + totalToiletries, toiletries);
                     Console.WriteLine(format, "$" + totalEntertainment, entertainment);
                     Console.WriteLine(format, "$" + totalTobacco, tobacco);
+                    Console.WriteLine(format, "$" + totalTips, tips);
 
                     Console.WriteLine("\nTotal Spent $" + total.Sum());
 
