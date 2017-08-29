@@ -406,13 +406,88 @@ namespace FinancialApp
                     Console.WriteLine("Integer must be between 1 and 12\n");
                 else
                 {
-                    Console.WriteLine(getMonthBegin(month));
+                    DateTime today = DateTime.Today;
+                    DateTime endMonth = new DateTime(today.Year, month, 1).AddMonths(1).AddDays(-1);
+
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date BETWEEN '"
+                        + getMonthBegin(month) + "' AND '" + endMonth + "' ORDER BY date", conn);
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        if (rdr.HasRows)
+                        {
+                            double total = 0;
+                            const string format = "{0,-3} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
+                            Console.WriteLine("Displaying results for " + displayMonth(month) + " " + today.Year + "\n");
+                            Console.WriteLine(String.Format(format, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
+
+                            while (rdr.Read())
+                            {
+                                total += Convert.ToDouble(rdr[1]);
+                                Console.WriteLine(String.Format(format,
+                                    rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
+                            }
+
+                            rdr.Close();
+
+                            Console.WriteLine("\nTotal Spent $" + total);
+                        }
+                        else
+                            Console.WriteLine("No results for: " + displayMonth(month) + " " + today.Year + "\n");
+                    }
                 }
                   
             }
             else
                 Console.WriteLine("Not a valid integer\n");
 
+        }
+
+        private string displayMonth(int month)
+        {
+            string monthString = "";
+
+            switch(month)
+            {
+                case 1:
+                    monthString = "January";
+                    break;
+                case 2:
+                    monthString = "February";
+                    break;
+                case 3:
+                    monthString = "March";
+                    break;
+                case 4:
+                    monthString = "April";
+                    break;
+                case 5:
+                    monthString = "May";
+                    break;
+                case 6:
+                    monthString = "June";
+                    break;
+                case 7:
+                    monthString = "July";
+                    break;
+                case 8:
+                    monthString = "August";
+                    break;
+                case 9:
+                    monthString = "September";
+                    break;
+                case 10:
+                    monthString = "October";
+                    break;
+                case 11:
+                    monthString = "November";
+                    break;
+                case 12:
+                    monthString = "December";
+                    break;
+            }
+
+            return monthString;
         }
 
         private void editExpense()
@@ -649,10 +724,10 @@ namespace FinancialApp
         {
             string monthStart;
             DateTime monthBegin;
-
             DateTime date = DateTime.Now;
+
             if(month != 0)
-                monthBegin = new DateTime(date.Year, date.Month, month);
+                monthBegin = new DateTime(date.Year, month, 1);
             else
                 monthBegin = new DateTime(date.Year, date.Month, 1);
 
