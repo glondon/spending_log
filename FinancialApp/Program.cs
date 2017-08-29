@@ -393,6 +393,28 @@ namespace FinancialApp
                 Console.WriteLine("Invalid ID entered - choose step 6 to try again...\n");
         }
 
+        private void showMonth()
+        {
+            Console.WriteLine("Enter a month: 1 - 12\n");
+            int month;
+
+            string m = Console.ReadLine();
+
+            if (int.TryParse(m, out month))
+            {
+                if (month < 1 || month > 12)
+                    Console.WriteLine("Integer must be between 1 and 12\n");
+                else
+                {
+                    Console.WriteLine(getMonthBegin(month));
+                }
+                  
+            }
+            else
+                Console.WriteLine("Not a valid integer\n");
+
+        }
+
         private void editExpense()
         {
             Console.Write("Edit expense: Enter ID of expense to edit\n");
@@ -623,12 +645,17 @@ namespace FinancialApp
                 Console.WriteLine("Not a valid ID - Select option 5 to try again");
         }
 
-        private string getMonthBegin()
+        private string getMonthBegin(int month = 0)
         {
             string monthStart;
+            DateTime monthBegin;
 
             DateTime date = DateTime.Now;
-            DateTime monthBegin = new DateTime(date.Year, date.Month, 1);
+            if(month != 0)
+                monthBegin = new DateTime(date.Year, date.Month, month);
+            else
+                monthBegin = new DateTime(date.Year, date.Month, 1);
+
             monthStart = monthBegin.ToString("d");
 
             return monthStart;
@@ -686,6 +713,9 @@ namespace FinancialApp
                             break;
                         case 10:
                             p.menu();
+                            break;
+                        case 12:
+                            p.showMonth();
                             break;
                         default:
                             Console.WriteLine("Not a valid choice");
