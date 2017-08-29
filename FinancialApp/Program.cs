@@ -39,6 +39,8 @@ namespace FinancialApp
         private string[] categories = { dining, alcohol, gasoline, food, toiletries, clothing, entertainment, tobacco, tips,
                                         utilities, coffee, travel, bank, tools, vehicle, gifts, education, insurance };
 
+        const string defaultFormat = "{0,-3} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
+
         //master - usaa statement 18th of every month
         //visa - chase statement 15th of every month
         //visa - navyfcu statement 16th of every month
@@ -80,13 +82,12 @@ namespace FinancialApp
                 if (rdr.HasRows)
                 {
                     double total = 0;
-                    const string format = "{0,-3} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
-                    Console.WriteLine(String.Format(format, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
+                    Console.WriteLine(String.Format(defaultFormat, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
 
                     while (rdr.Read())
                     {
                         total += Convert.ToDouble(rdr[1]);
-                        Console.WriteLine(String.Format(format,
+                        Console.WriteLine(String.Format(defaultFormat,
                             rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
                     }
 
@@ -417,14 +418,13 @@ namespace FinancialApp
                         if (rdr.HasRows)
                         {
                             double total = 0;
-                            const string format = "{0,-3} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
                             Console.WriteLine("Displaying results for " + displayMonth(month) + " " + today.Year + "\n");
-                            Console.WriteLine(String.Format(format, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
+                            Console.WriteLine(String.Format(defaultFormat, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
 
                             while (rdr.Read())
                             {
                                 total += Convert.ToDouble(rdr[1]);
-                                Console.WriteLine(String.Format(format,
+                                Console.WriteLine(String.Format(defaultFormat,
                                     rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
                             }
 
