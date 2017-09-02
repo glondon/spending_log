@@ -105,26 +105,21 @@ namespace FinancialApp
         private void monthSummary(int month = 0)
         {
             string currentMonth = "Current Month";
-
-            if (month != 0)
-                currentMonth = displayMonth(month);
-
-            Console.WriteLine("Spending Summary for "+ currentMonth + ":\n");
-            Console.WriteLine();
-
             DateTime today = DateTime.Today;
             DateTime beginMonth = Convert.ToDateTime(getMonthBegin());
-
-            if (month != 0)
-                beginMonth = Convert.ToDateTime(getMonthBegin(month));
-
             DateTime endMonth = new DateTime(today.Year, today.Month, 1).AddMonths(1).AddDays(-1);
 
-            if(month != 0)
+            if (month != 0)
+            {
+                currentMonth = displayMonth(month);
+                beginMonth = Convert.ToDateTime(getMonthBegin(month));
                 endMonth = new DateTime(today.Year, month, 1).AddMonths(1).AddDays(-1);
+            }
+
+            Console.WriteLine("Spending Summary for "+ currentMonth + ":\n\n");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date BETWEEN '"
-                + getMonthBegin(month) + "' AND '" + endMonth + "' ORDER BY date", conn);
+                + beginMonth + "' AND '" + endMonth + "' ORDER BY date", conn);
             
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
@@ -238,7 +233,7 @@ namespace FinancialApp
                     Console.WriteLine(format, "$" + totalEducation, education);
                     Console.WriteLine(format, "$" + totalInsurance, insurance);
 
-                    Console.WriteLine("\nTotal Spent $" + total.Sum());
+                    Console.WriteLine("\nTotal Spent for " + currentMonth + " $" + total.Sum());
 
                 }
                 else
