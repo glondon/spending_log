@@ -67,6 +67,7 @@ namespace FinancialApp
             Console.WriteLine("11. View a certain date");
             Console.WriteLine("12. View a particular month");
             Console.WriteLine("13. View a certain date range");
+            Console.WriteLine("14. View summary for a particular month");
             Console.WriteLine();
         }
 
@@ -443,6 +444,147 @@ namespace FinancialApp
 
         }
 
+        private void showMonthSummary()
+        {
+            Console.WriteLine("Enter a month: 1 - 12\n");
+            int month;
+
+            string m = Console.ReadLine();
+
+            if (int.TryParse(m, out month))
+            {
+                if (month < 1 || month > 12)
+                    Console.WriteLine("Integer must be between 1 and 12\n");
+                else
+                {
+                    DateTime today = DateTime.Today;
+                    DateTime endMonth = new DateTime(today.Year, month, 1).AddMonths(1).AddDays(-1);
+
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date BETWEEN '"
+                        + getMonthBegin(month) + "' AND '" + endMonth + "' ORDER BY date", conn);
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        if (rdr.HasRows)
+                        {
+                            Console.WriteLine("Showing results for " + displayMonth(month) + "\n");
+                            double totalDining = 0;
+                            double totalAlcohol = 0;
+                            double totalGasoline = 0;
+                            double totalFood = 0;
+                            double totalClothing = 0;
+                            double totalToiletries = 0;
+                            double totalEntertainment = 0;
+                            double totalTobacco = 0;
+                            double totalTips = 0;
+                            double totalUtilities = 0;
+                            double totalCoffee = 0;
+                            double totalTravel = 0;
+                            double totalBank = 0;
+                            double totalTools = 0;
+                            double totalVehicle = 0;
+                            double totalGifts = 0;
+                            double totalEducation = 0;
+                            double totalInsurance = 0;
+
+                            while (rdr.Read())
+                            {
+                                switch (rdr[2].ToString().Trim())
+                                {
+                                    case dining:
+                                        totalDining += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case alcohol:
+                                        totalAlcohol += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case gasoline:
+                                        totalGasoline += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case food:
+                                        totalFood += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case toiletries:
+                                        totalToiletries += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case clothing:
+                                        totalClothing += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case entertainment:
+                                        totalEntertainment += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case tobacco:
+                                        totalTobacco += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case tips:
+                                        totalTips += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case utilities:
+                                        totalUtilities += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case coffee:
+                                        totalCoffee += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case travel:
+                                        totalTravel += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case bank:
+                                        totalBank += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case tools:
+                                        totalTools += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case vehicle:
+                                        totalVehicle += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case gifts:
+                                        totalGifts += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case education:
+                                        totalEducation += Convert.ToDouble(rdr[1]);
+                                        break;
+                                    case insurance:
+                                        totalInsurance += Convert.ToDouble(rdr[1]);
+                                        break;
+
+                                }
+
+                            }
+
+                            rdr.Close();
+
+                            double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries,
+                                       totalEntertainment, totalTobacco, totalTips, totalUtilities, totalCoffee, totalTravel,
+                                       totalBank, totalTools, totalVehicle, totalGifts, totalEducation, totalInsurance };
+
+                            const string format = "{0,-10} {1,-15}";
+                            Console.WriteLine(format, "$" + totalDining, dining);
+                            Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), alcohol);
+                            Console.WriteLine(format, "$" + totalGasoline, gasoline);
+                            Console.WriteLine(format, "$" + totalFood.ToString("0.00"), food);
+                            Console.WriteLine(format, "$" + totalClothing, clothing);
+                            Console.WriteLine(format, "$" + totalToiletries, toiletries);
+                            Console.WriteLine(format, "$" + totalEntertainment, entertainment);
+                            Console.WriteLine(format, "$" + totalTobacco, tobacco);
+                            Console.WriteLine(format, "$" + totalTips, tips);
+                            Console.WriteLine(format, "$" + totalUtilities, utilities);
+                            Console.WriteLine(format, "$" + totalCoffee, coffee);
+                            Console.WriteLine(format, "$" + totalTravel, travel);
+                            Console.WriteLine(format, "$" + totalBank, bank);
+                            Console.WriteLine(format, "$" + totalTools, tools);
+                            Console.WriteLine(format, "$" + totalVehicle, vehicle);
+                            Console.WriteLine(format, "$" + totalGifts, gifts);
+                            Console.WriteLine(format, "$" + totalEducation, education);
+                            Console.WriteLine(format, "$" + totalInsurance, insurance);
+
+                            Console.WriteLine("\nTotal Spent $" + total.Sum());
+                        }
+                        else
+                            Console.WriteLine("No results for " + displayMonth(month) + "\n");
+                    }
+                }
+            }
+        }
+
         private string displayMonth(int month)
         {
             string monthString = "";
@@ -791,6 +933,9 @@ namespace FinancialApp
                             break;
                         case 12:
                             p.showMonth();
+                            break;
+                        case 14:
+                            p.showMonthSummary();
                             break;
                         default:
                             Console.WriteLine("Not a valid choice");
