@@ -39,7 +39,7 @@ namespace FinancialApp
         private string[] categories = { dining, alcohol, gasoline, food, toiletries, clothing, entertainment, tobacco, tips,
                                         utilities, coffee, travel, bank, tools, vehicle, gifts, education, insurance };
 
-        const string defaultFormat = "{0,-3} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
+        const string defaultFormat = "{0,-5} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
 
         //master - usaa statement 18th of every month
         //visa - chase statement 15th of every month
