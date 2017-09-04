@@ -832,6 +832,8 @@ namespace FinancialApp
 
                                 Console.WriteLine("\nTotal Spent using (" + toSearch + ") $" + total);
                             }
+                            else
+                                Console.WriteLine("No results for (" + toSearch + ") in " + displayMonth(month) + "\n");
                         }
                     }
                 }
