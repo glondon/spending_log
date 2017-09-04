@@ -858,8 +858,6 @@ namespace FinancialApp
 
                 if (int.TryParse(menuItem, out intCheck))
                 {
-                    intCheck = Int32.Parse(menuItem);
-
                     switch (intCheck)
                     {
                         case 1:
