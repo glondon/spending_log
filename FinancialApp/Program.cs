@@ -624,7 +624,7 @@ namespace FinancialApp
 
                                 if(costEdit || categoryEdit || typeEdit || dateEdit)
                                 {
-                                    string query = "Update personal ";
+                                    string query = "Update personal SET ";
                                     List<string> toUpdate = new List<string>();
 
                                     if (costEdit)
@@ -661,16 +661,16 @@ namespace FinancialApp
                                             switch(update)
                                             {
                                                 case "cost":
-                                                    query += "SET cost = @cost ";
+                                                    query += "cost = @cost ";
                                                     break;
                                                 case "category":
-                                                    query += "SET category = @category ";
+                                                    query += "category = @category ";
                                                     break;
                                                 case "type":
-                                                    query += "SET payment_type = @type ";
+                                                    query += "payment_type = @type ";
                                                     break;
                                                 case "date":
-                                                    query += "SET date = @date ";
+                                                    query += "date = @date ";
                                                     break;
                                             }
                                         }
@@ -679,16 +679,16 @@ namespace FinancialApp
                                             switch(update)
                                             {
                                                 case "cost":
-                                                    query += "SET cost = @cost, ";
+                                                    query += "cost = @cost, ";
                                                     break;
                                                 case "category":
-                                                    query += "SET category = @category, ";
+                                                    query += "category = @category, ";
                                                     break;
                                                 case "type":
-                                                    query += "SET payment_type = @type, ";
+                                                    query += "payment_type = @type, ";
                                                     break;
                                                 case "date":
-                                                    query += "SET date = @date, ";
+                                                    query += "date = @date, ";
                                                     break;
                                             }
                                         }
