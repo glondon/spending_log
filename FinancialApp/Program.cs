@@ -352,7 +352,6 @@ namespace FinancialApp
 
             if (int.TryParse(id, out intCheck))
             {
-                intCheck = Int32.Parse(id);
                 SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE Id = @id", conn);
                 cmd.Parameters.AddWithValue("id", intCheck);
                    
@@ -523,7 +522,6 @@ namespace FinancialApp
 
             if(int.TryParse(id, out idEntered))
             {
-                idEntered = Int32.Parse(id);
                 SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE Id = @id", conn);
                 cmd.Parameters.AddWithValue("id", idEntered);
 
@@ -551,7 +549,6 @@ namespace FinancialApp
                                 string cost = Console.ReadLine();
                                 if(Double.TryParse(cost, out costEntered))
                                 {
-                                    costEntered = Double.Parse(cost);
                                     costEdit = true;
 
                                     if (costEntered == 0)
@@ -569,7 +566,6 @@ namespace FinancialApp
                                 string category = Console.ReadLine();                                
                                 if(Int32.TryParse(category, out intCheck))
                                 {
-                                    intCheck = Int32.Parse(category);
                                     if(intCheck == 0)
                                         categoryEdit = false;
                                 }
@@ -590,7 +586,6 @@ namespace FinancialApp
                                 string paymentType = Console.ReadLine();
                                 if (Int32.TryParse(paymentType, out typeCheck))
                                 {
-                                    typeCheck = Int32.Parse(paymentType);
                                     if (typeCheck == 0)
                                         typeEdit = false;
                                 }
@@ -612,7 +607,6 @@ namespace FinancialApp
                                 string date = Console.ReadLine();
                                 if (Int32.TryParse(date, out dateCheck))
                                 {
-                                    dateCheck = Int32.Parse(date);
                                     if (dateCheck == 0)
                                         dateEdit = false;
                                 }
