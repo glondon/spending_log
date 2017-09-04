@@ -761,17 +761,6 @@ namespace FinancialApp
             return monthStart;
         }
 
-        private string getVisaChaseBegin()
-        {
-            string statementStart;
-
-            DateTime date = DateTime.Now;
-            DateTime statementBegin = new DateTime(date.Year, date.Month - 1, 15);
-            statementStart = statementBegin.ToString("d");
-
-            return statementStart;
-        }
-
         private void viewPaymentType()
         {
             Console.WriteLine("Enter payment type to view\n");
