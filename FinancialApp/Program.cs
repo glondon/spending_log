@@ -41,10 +41,6 @@ namespace FinancialApp
 
         const string defaultFormat = "{0,-5} | {1,-8} | {2,-13} | {3,-15} | {4,-10}";
 
-        //master - usaa statement 18th of every month
-        //visa - chase statement 15th of every month
-        //visa - navyfcu statement 16th of every month
-
         public Program()
         {
             conn = new SqlConnection("Data Source=GREG-BEE-2;Initial Catalog=spending;Integrated Security=True");
@@ -776,6 +772,87 @@ namespace FinancialApp
             return statementStart;
         }
 
+        private void viewPaymentType()
+        {
+            Console.WriteLine("Enter payment type to view\n");
+
+            string type = Console.ReadLine();
+
+            if (paymentTypes.Contains(type.Trim()))
+            {
+                Console.WriteLine("What month would you like to view? - enter 1 - 12\n");
+
+                string m = Console.ReadLine();
+                int month;
+
+                if (int.TryParse(m, out month))
+                {
+                    if (month < 1 || month > 12)
+                        Console.WriteLine(month + " is out of range\n");
+                    else
+                    {
+                        DateTime today = DateTime.Today;
+                        DateTime beginMonth = DateTime.Today;
+                        DateTime endMonth = DateTime.Today;
+                        string toSearch = "";
+
+                        switch (type.Trim())
+                        {
+                            case visaChase:
+                                toSearch = visaChase;
+                                beginMonth = new DateTime(today.Year, month, 15);
+                                endMonth = new DateTime(today.Year, month + 1, 14);
+                                break;
+                            case masterUsaa:
+                                toSearch = masterUsaa;
+                                beginMonth = new DateTime(today.Year, month, 18);
+                                endMonth = new DateTime(today.Year, month + 1, 17);
+                                break;
+                            case visaNavyfcu:
+                                toSearch = visaNavyfcu;
+                                beginMonth = new DateTime(today.Year, month, 16);
+                                endMonth = new DateTime(today.Year, month + 1, 15);
+                                break;
+                            case cash:
+                                toSearch = cash;
+                                beginMonth = new DateTime(today.Year, month, 1);
+                                endMonth = new DateTime(today.Year, today.Month, 1).AddMonths(1).AddDays(-1);
+                                break;
+                        }
+
+                        string query = "SELECT * FROM personal WHERE date BETWEEN '"
+                        + beginMonth + "' AND '" + endMonth + "' AND payment_type = '" + toSearch + "' ORDER BY date";
+
+                        SqlCommand cmd = new SqlCommand(query, conn);
+
+                        using (SqlDataReader rdr = cmd.ExecuteReader())
+                        {
+                            if (rdr.HasRows)
+                            {
+                                double total = 0;
+                                Console.WriteLine(String.Format(defaultFormat, "ID", " SPENT", "CATEGORY", "PAYMENT TYPE", "DATE"));
+
+                                while (rdr.Read())
+                                {
+                                    total += Convert.ToDouble(rdr[1]);
+                                    Console.WriteLine(String.Format(defaultFormat,
+                                        rdr[0], " $" + rdr[1], rdr[2], rdr[3], Convert.ToDateTime(rdr[4]).ToString("MM/dd/yyyy")));
+                                }
+
+                                rdr.Close();
+
+                                Console.WriteLine("\nTotal Spent using (" + toSearch + ") $" + total);
+                            }
+                        }
+                    }
+                }
+                else
+                    Console.WriteLine(m + " is not a valid integer value\n");
+            }
+            else
+                Console.WriteLine(type + " is not a vaild Payment Type\n");
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("\n---------- Financial App - Personal Spending Summary ----------\n");
@@ -801,7 +878,7 @@ namespace FinancialApp
                             p.monthSummary();
                             break;
                         case 3:
-                            Console.WriteLine(p.getVisaChaseBegin());
+                            p.viewPaymentType();
                             break;
                         case 4:
                             p.addExpense();
