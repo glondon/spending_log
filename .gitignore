@@ -45,3 +45,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#custom
+FinancialApp.v12
+FinancialApp.v12.suo
+FinancialApp/bin/Debug/*
+FinancialApp/obj/Debug/*
