@@ -49,5 +49,5 @@ Temporary Items
 #custom
 FinancialApp.v12
 FinancialApp.v12.suo
-/bin/Debug/*
-/obj/Debug/*
+FinancialApp/bin/Debug/*
+FinancialApp/obj/Debug/*
