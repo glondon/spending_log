@@ -197,11 +197,24 @@ namespace FinancialApp
 
                     rdr.Close();
 
+                    const string format = "{0,-10} {1,-15}";
+
+                    var totals = new List<Tuple<double, string>>();
+
+                    if(totalDining > 0)
+                        totals.Add(new Tuple<double, string>(totalDining, dining));
+                    if(totalAlcohol > 0)
+                        totals.Add(new Tuple<double, string>(totalAlcohol, alcohol));
+
+                    for (int i = 0; i < totals.Count; i++)
+                        Console.WriteLine(format, "$" + totals[i].Item1, totals[i].Item2);
+
+
                     double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries,
                                        totalEntertainment, totalTobacco, totalTips, totalCoffee, totalTravel,
                                        totalBank, totalTools, totalVehicle, totalGifts, totalEducation };
 
-                    const string format = "{0,-10} {1,-15}";
+                    
                     Console.WriteLine(format, "$" + totalDining, dining);
                     Console.WriteLine(format, "$" + totalAlcohol.ToString("0.00"), alcohol);
                     Console.WriteLine(format, "$" + totalGasoline, gasoline);
