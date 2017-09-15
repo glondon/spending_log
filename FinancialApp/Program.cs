@@ -201,45 +201,36 @@ namespace FinancialApp
 
                     var totals = new List<Tuple<double, string>>();
 
-                    if(totalDining > 0)
-                        totals.Add(new Tuple<double, string>(totalDining, dining));
-                    if(totalAlcohol > 0)
-                        totals.Add(new Tuple<double, string>(totalAlcohol, alcohol));
-                    if (totalGasoline > 0)
-                        totals.Add(new Tuple<double, string>(totalGasoline, gasoline));
-                    if (totalFood > 0)
-                        totals.Add(new Tuple<double, string>(totalFood, food));
-                    if (totalToiletries > 0)
-                        totals.Add(new Tuple<double, string>(totalToiletries, toiletries));
-                    if (totalEntertainment > 0)
-                        totals.Add(new Tuple<double, string>(totalEntertainment, entertainment));
-                    if (totalTobacco > 0)
-                        totals.Add(new Tuple<double, string>(totalTobacco, tobacco));
-                    if (totalTips > 0)
-                        totals.Add(new Tuple<double, string>(totalTips, tips));
-                    if (totalCoffee > 0)
-                        totals.Add(new Tuple<double, string>(totalCoffee, coffee));
-                    if (totalTravel > 0)
-                        totals.Add(new Tuple<double, string>(totalTravel, travel));
-                    if (totalBank > 0)
-                        totals.Add(new Tuple<double, string>(totalBank, bank));
-                    if (totalTools > 0)
-                        totals.Add(new Tuple<double, string>(totalTools, tools));
-                    if (totalVehicle > 0)
-                        totals.Add(new Tuple<double, string>(totalVehicle, vehicle));
-                    if (totalGifts > 0)
-                        totals.Add(new Tuple<double, string>(totalGifts, gifts));
-                    if (totalEducation > 0)
-                        totals.Add(new Tuple<double, string>(totalTips, education));
+                    totals.Add(new Tuple<double, string>(totalDining, dining));          
+                    totals.Add(new Tuple<double, string>(totalAlcohol, alcohol));                  
+                    totals.Add(new Tuple<double, string>(totalGasoline, gasoline));        
+                    totals.Add(new Tuple<double, string>(totalFood, food));
+                    totals.Add(new Tuple<double, string>(totalClothing, clothing)); 
+                    totals.Add(new Tuple<double, string>(totalToiletries, toiletries));         
+                    totals.Add(new Tuple<double, string>(totalEntertainment, entertainment));
+                    totals.Add(new Tuple<double, string>(totalTobacco, tobacco));            
+                    totals.Add(new Tuple<double, string>(totalTips, tips));          
+                    totals.Add(new Tuple<double, string>(totalCoffee, coffee));    
+                    totals.Add(new Tuple<double, string>(totalTravel, travel));         
+                    totals.Add(new Tuple<double, string>(totalBank, bank));
+                    totals.Add(new Tuple<double, string>(totalTools, tools));                
+                    totals.Add(new Tuple<double, string>(totalVehicle, vehicle));              
+                    totals.Add(new Tuple<double, string>(totalGifts, gifts));
+                    totals.Add(new Tuple<double, string>(totalEducation, education));
 
-                    double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries,
-                                       totalEntertainment, totalTobacco, totalTips, totalCoffee, totalTravel,
-                                       totalBank, totalTools, totalVehicle, totalGifts, totalEducation };
+                    double total = 0;
 
                     for (int i = 0; i < totals.Count; i++)
-                        Console.WriteLine(format, "$" + totals[i].Item1, totals[i].Item2);
+                    {
+                        if(totals[i].Item1 > 0)
+                        {
+                            Console.WriteLine(format, "$" + totals[i].Item1, totals[i].Item2);
+                            total += totals[i].Item1;
+                        }
+                            
+                    }
 
-                    Console.WriteLine("\nTotal Spent for " + currentMonth + " $" + total.Sum());
+                    Console.WriteLine("\nTotal Spent for " + currentMonth + " $" + total);
 
                 }
                 else
