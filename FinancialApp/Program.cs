@@ -204,7 +204,8 @@ namespace FinancialApp
                     totals.Add(new Tuple<double, string>(totalDining, dining));          
                     totals.Add(new Tuple<double, string>(totalAlcohol, alcohol));                  
                     totals.Add(new Tuple<double, string>(totalGasoline, gasoline));        
-                    totals.Add(new Tuple<double, string>(totalFood, food));            
+                    totals.Add(new Tuple<double, string>(totalFood, food));
+                    totals.Add(new Tuple<double, string>(totalClothing, clothing)); 
                     totals.Add(new Tuple<double, string>(totalToiletries, toiletries));         
                     totals.Add(new Tuple<double, string>(totalEntertainment, entertainment));
                     totals.Add(new Tuple<double, string>(totalTobacco, tobacco));            
@@ -215,19 +216,21 @@ namespace FinancialApp
                     totals.Add(new Tuple<double, string>(totalTools, tools));                
                     totals.Add(new Tuple<double, string>(totalVehicle, vehicle));              
                     totals.Add(new Tuple<double, string>(totalGifts, gifts));
-                    totals.Add(new Tuple<double, string>(totalTips, education));
+                    totals.Add(new Tuple<double, string>(totalEducation, education));
 
-                    double[] total = { totalDining, totalAlcohol, totalGasoline, totalFood, totalClothing, totalToiletries,
-                                       totalEntertainment, totalTobacco, totalTips, totalCoffee, totalTravel,
-                                       totalBank, totalTools, totalVehicle, totalGifts, totalEducation };
+                    double total = 0;
 
                     for (int i = 0; i < totals.Count; i++)
                     {
                         if(totals[i].Item1 > 0)
+                        {
                             Console.WriteLine(format, "$" + totals[i].Item1, totals[i].Item2);
+                            total += totals[i].Item1;
+                        }
+                            
                     }
 
-                    Console.WriteLine("\nTotal Spent for " + currentMonth + " $" + total.Sum());
+                    Console.WriteLine("\nTotal Spent for " + currentMonth + " $" + total);
 
                 }
                 else
