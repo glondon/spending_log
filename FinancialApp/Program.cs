@@ -79,7 +79,7 @@ namespace FinancialApp
             }
             else
             {
-                Console.WriteLine("Spending total for " + today.ToString().Substring(0, 10) + "\n");
+                Console.WriteLine("Spending total for " + today.ToString().Substring(0, 9) + "\n");
                 query += "= '" + today.ToString() + "' ORDER BY category";
             }
 
@@ -113,6 +113,19 @@ namespace FinancialApp
         {
             DateTime today = DateTime.Today;
             general(today);
+        }
+
+        private void showDate()
+        {
+            Console.WriteLine("Enter a date to view\n");
+            DateTime date;
+
+            string enteredDate = Console.ReadLine();
+
+            if (DateTime.TryParse(enteredDate, out date))
+                general(date);
+            else
+                Console.WriteLine(enteredDate + " is not a valid date, try again\n");
         }
 
         private void monthSummary(int month = 0)
@@ -898,6 +911,9 @@ namespace FinancialApp
                             break;
                         case 10:
                             p.menu();
+                            break;
+                        case 11:
+                            p.showDate();
                             break;
                         case 12:
                             p.showMonth();
