@@ -67,12 +67,24 @@ namespace FinancialApp
             Console.WriteLine();
         }
 
-        private void monthGeneral()
+        private void general(DateTime? today = null)
         {
-            Console.WriteLine("Spending for Current Month:\n");
-            Console.WriteLine();
+            string intro = "Spending for ";
+            string query = "SELECT * FROM personal WHERE date ";
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM personal WHERE date >= '" + getMonthBegin() + "' ORDER BY date", conn);
+            if(today == null)
+            {
+                Console.WriteLine(intro + "Current Month:\n");
+                query += ">= '" + getMonthBegin() + "' ORDER BY date";
+            }
+            else
+            {
+                Console.WriteLine("Spending total for " + today + "\n");
+                query += "= '" + today.ToString() + "' ORDER BY category";
+                
+            }
+
+            SqlCommand cmd = new SqlCommand(query, conn);
 
             using (SqlDataReader rdr = cmd.ExecuteReader()) 
             {
@@ -96,6 +108,12 @@ namespace FinancialApp
                 else
                     Console.WriteLine("No results");
             }
+        }
+
+        private void showToday()
+        {
+            DateTime today = DateTime.Today;
+            general(today);
         }
 
         private void monthSummary(int month = 0)
@@ -856,7 +874,7 @@ namespace FinancialApp
                     switch (intCheck)
                     {
                         case 1:
-                            p.monthGeneral();
+                            p.general();
                             break;
                         case 2:
                             p.monthSummary();
@@ -872,6 +890,9 @@ namespace FinancialApp
                             break;
                         case 6:
                             p.deleteExpense();
+                            break;
+                        case 8:
+                            p.showToday();
                             break;
                         case 9:
                             Environment.Exit(0);
