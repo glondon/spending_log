@@ -123,9 +123,7 @@ namespace FinancialApp
             string enteredDate = Console.ReadLine();
 
             if (DateTime.TryParse(enteredDate, out date))
-            {
                 general(date);
-            }
             else
                 Console.WriteLine(enteredDate + " is not a valid date, try again\n");
         }
