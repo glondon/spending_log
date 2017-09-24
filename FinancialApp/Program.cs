@@ -79,9 +79,8 @@ namespace FinancialApp
             }
             else
             {
-                Console.WriteLine("Spending total for " + today + "\n");
+                Console.WriteLine("Spending total for " + today.ToString().Substring(0, 10) + "\n");
                 query += "= '" + today.ToString() + "' ORDER BY category";
-                
             }
 
             SqlCommand cmd = new SqlCommand(query, conn);
