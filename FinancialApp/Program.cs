@@ -117,13 +117,18 @@ namespace FinancialApp
 
         private void showDate()
         {
-            Console.WriteLine("Enter a date to view\n");
+            Console.WriteLine("Enter a date to view (Enter 0 for today's spending)\n");
             DateTime date;
 
             string enteredDate = Console.ReadLine();
 
             if (DateTime.TryParse(enteredDate, out date))
                 general(date);
+            else if (enteredDate == "0")
+            {
+                date = DateTime.Now;
+                general(date);
+            }
             else
                 Console.WriteLine(enteredDate + " is not a valid date, try again\n");
         }
