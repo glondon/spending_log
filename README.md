@@ -1,2 +1,2 @@
-# financial-app
-Personal app to keep track of spending (personal finances) built in C#
+# spending_log
+Personal app to keep track/log discretionary spending built in C#
