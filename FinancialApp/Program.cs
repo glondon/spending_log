@@ -80,11 +80,10 @@ namespace FinancialApp
             else
             {
                 string theDate;
-                DateTime tocheck = DateTime.Now;
-                
-                if (tocheck.Month > 9)
-                    theDate = today.ToString().Substring(0, 10);
-                else
+                theDate = today.ToString().Substring(0, 11);
+                char last = theDate[theDate.Length - 1];
+
+                if(!last.Equals(' '))
                     theDate = today.ToString().Substring(0, 9);
                 
                 Console.WriteLine("Spending total for " + theDate + "\n");
