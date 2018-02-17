@@ -64,6 +64,7 @@ namespace FinancialApp
             Console.WriteLine("12. View a particular month");
             Console.WriteLine("13. View a certain date range");
             Console.WriteLine("14. View summary for a particular month");
+            Console.WriteLine("15. View available categories");
             Console.WriteLine();
         }
 
@@ -114,6 +115,14 @@ namespace FinancialApp
                 else
                     Console.WriteLine("No results");
             }
+        }
+
+        private void showCategories()
+        {
+            Array.Sort(categories);
+            Console.WriteLine("Available Categories:\n");
+            foreach (var item in categories)
+                Console.WriteLine(item);
         }
 
         private void showToday()
@@ -932,6 +941,9 @@ namespace FinancialApp
                             break;
                         case 14:
                             p.showMonthSummary();
+                            break;
+                        case 15:
+                            p.showCategories();
                             break;
                         default:
                             Console.WriteLine("Not a valid choice");
