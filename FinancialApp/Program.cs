@@ -942,6 +942,9 @@ namespace FinancialApp
                         case 14:
                             p.showMonthSummary();
                             break;
+                        case 15:
+                            p.showCategories();
+                            break;
                         default:
                             Console.WriteLine("Not a valid choice");
                             break;
