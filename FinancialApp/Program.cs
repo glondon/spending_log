@@ -188,9 +188,29 @@ namespace FinancialApp
                     double totalVehicle = 0;
                     double totalGifts = 0;
                     double totalEducation = 0;
+                    int cCounter = 0;
+                    int nCounter = 0;
+                    int caCounter = 0;
+                    int mCounter = 0;
 
                     while (rdr.Read())
                     {
+                        switch (rdr[3].ToString())
+                        {
+                            case "visa - chase":
+                                cCounter += 1;
+                                break;
+                            case "visa - navyfcu":
+                                nCounter += 1;
+                                break;
+                            case "master - usaa":
+                                mCounter += 1;
+                                break;
+                            case "cash":
+                                caCounter += 1;
+                                break;
+                        }
+
                         switch (rdr[2].ToString().Trim())
                         {
                             case dining:
@@ -282,6 +302,7 @@ namespace FinancialApp
                     }
 
                     Console.WriteLine("\nTotal Spent for " + currentMonth + " $" + total);
+                    Console.WriteLine("Chase: " + cCounter + " NFCU: " + nCounter + " USAA: " + mCounter + " CASH: " + caCounter);
 
                 }
                 else
