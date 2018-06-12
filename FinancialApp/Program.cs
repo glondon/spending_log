@@ -919,6 +919,11 @@ namespace FinancialApp
             if (categories.Contains(cat.ToLower()))
             {
                 Console.WriteLine("Viewing: " + cat.ToLower() + "\n");
+                //view current month for now
+                var now = DateTime.Now;
+                var start = new DateTime(now.Year, now.Month, 1);
+                
+
             }
             else
                 Console.WriteLine(cat + " not a valid category");
