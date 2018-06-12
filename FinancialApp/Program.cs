@@ -65,6 +65,7 @@ namespace FinancialApp
             Console.WriteLine("13. View a certain date range");
             Console.WriteLine("14. View summary for a particular month");
             Console.WriteLine("15. View available categories");
+            Console.WriteLine("16. View transactions by category");
             Console.WriteLine();
         }
 
@@ -911,6 +912,18 @@ namespace FinancialApp
                 Console.WriteLine(type + " is not a vaild Payment Type\n");
         }
 
+        private void transactionsByCategory()
+        {
+            Console.WriteLine("Enter a category\n");
+            String cat = Console.ReadLine();
+            if (categories.Contains(cat.ToLower()))
+            {
+                Console.WriteLine("Viewing: " + cat.ToLower() + "\n");
+            }
+            else
+                Console.WriteLine(cat + " not a valid category");
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("\n---------- Financial App - Personal Spending Summary ----------\n");
@@ -965,6 +978,9 @@ namespace FinancialApp
                             break;
                         case 15:
                             p.showCategories();
+                            break;
+                        case 16:
+                            p.transactionsByCategory();
                             break;
                         default:
                             Console.WriteLine("Not a valid choice");
