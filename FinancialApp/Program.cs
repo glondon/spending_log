@@ -922,7 +922,8 @@ namespace FinancialApp
                 //view current month for now
                 var now = DateTime.Now;
                 var start = new DateTime(now.Year, now.Month, 1);
-                
+                String q = "SELECT * FROM personal WHERE category = '" + cat.ToLower() + "' AND date >= '" + start.ToString("MM/dd/yyyy") + "'";
+                Console.WriteLine(q);
 
             }
             else
